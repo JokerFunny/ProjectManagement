@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Model
 {
     /// <summary>
-    /// Model for Formula
+    /// Model for project
     /// </summary>
-    public class Formula
+    public class Project
     {
         public Guid Id { get; set; }
 
@@ -14,10 +15,8 @@ namespace Model
 
         public string Description { get; set; }
 
-        public Dictionary<Guid, int> MaterialsWithQuantity { get; set; }
+        public Guid Formula { get; set; }
 
-        public Guid CreatedBy { get; set; }
-
-        public List<Guid> SharedWith { get; set; }
+        public Guid DevelopedByCompany { get; set; }
     }
 }
