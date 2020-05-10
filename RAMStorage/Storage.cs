@@ -14,24 +14,12 @@ namespace RAMStorage
         /// <summary>
         /// List of <see cref="Country"/>
         /// </summary>
-        public static List<Country> Countries { get; private set; } =
-            new List<Country>() 
-            { 
-                new Country() { Id = Guid.NewGuid(), Name = "Ukraine", LawLink = "" }, 
-                new Country() { Id = Guid.NewGuid(), Name = "Belgium", LawLink = "" },
-                new Country() { Id = Guid.NewGuid(), Name = "Italy", LawLink = "" },
-            };
+        public static List<Country> Countries { get; private set; }
 
         /// <summary>
         /// List of <see cref="Company"/>
         /// </summary>
-        public static List<Company> Companies { get; private set; } =
-            new List<Company>() 
-            { 
-                new Company() { Id = Guid.NewGuid(), Name = "TOVARIS4", Description  = "Development for U", CountryOfFoundation = Countries[0].Id, Photo = "" }, 
-                new Company() { Id = Guid.NewGuid(), Name = "Sobratia", Description  = "Family company", CountryOfFoundation = Countries[1].Id, Photo = "" }, 
-                new Company() { Id = Guid.NewGuid(), Name = "HimPromTorg", Description  = "Chemicals for everebody!", CountryOfFoundation = Countries[2].Id, Photo = "" }
-            };
+        public static List<Company> Companies { get; private set; }
 
         /// <summary>
         /// List of <see cref="User"/>
@@ -41,47 +29,35 @@ namespace RAMStorage
         /// <summary>
         /// List of <see cref="Material"/>
         /// </summary>
-        public static List<Material> Materials { get; private set; } =
-            new List<Material>()
-            {
-                new Material() { Id = Guid.NewGuid(), Name = "Watter", Description  = "Simple H2O", PricePerGramm = 0.01M, BannedInCountries = new List<Guid>() { Countries[2].Id }, CreatedBy = Users[0].Id, Image = "" },
-                new Material() { Id = Guid.NewGuid(), Name = "Salt", Description  = "Simple salt", PricePerGramm = 0.35M, BannedInCountries = null, CreatedBy = Users[0].Id, Image = "" }
-            };
+        public static List<Material> Materials { get; private set; }
 
         /// <summary>
         /// List of <see cref="Formula"/>
         /// </summary>
-        public static List<Formula> Formulas { get; private set; } =
-            new List<Formula>()
-            {
-                new Formula() 
-                { 
-                    Id = Guid.NewGuid(), 
-                    Name = "Simple formula", 
-                    Description  = "Test formula", 
-                    CreatedBy = Users[0].Id, 
-                    SharedWith = new List<Guid>() { Companies[2].Id },
-                    MaterialsWithPercentQuantity = new Dictionary<Guid, int>() 
-                    {
-                        { Materials[0].Id, 90 },
-                        { Materials[1].Id, 10 }
-                    } 
-                }
-            };
+        public static List<Formula> Formulas { get; private set; }
 
         /// <summary>
         /// List of <see cref="Project"/>
         /// </summary>
-        public static List<Project> Projects { get; private set; } =
-            new List<Project>()
-            {
-                new Project() { Id = Guid.NewGuid(), Name = "Test proj", Description  = "Test proj 1", DevelopedByCompany = Users[0].CompanyId, Formula = Formulas[0].Id }
-            };
+        public static List<Project> Projects { get; private set; }
 
         static Storage()
         {
-            byte[] passwordSalt = PasswordHelper.GenerateSalt();
+            Countries = new List<Country>()
+            {
+                new Country() { Id = Guid.NewGuid(), Name = "Ukraine", LawLink = "" },
+                new Country() { Id = Guid.NewGuid(), Name = "Belgium", LawLink = "" },
+                new Country() { Id = Guid.NewGuid(), Name = "Italy", LawLink = "" },
+            };
 
+            Companies = new List<Company>()
+            {
+                new Company() { Id = Guid.NewGuid(), Name = "TOVARIS4", Description  = "Development for U", CountryOfFoundation = Countries[0].Id, Photo = "" },
+                new Company() { Id = Guid.NewGuid(), Name = "Sobratia", Description  = "Family company", CountryOfFoundation = Countries[1].Id, Photo = "" },
+                new Company() { Id = Guid.NewGuid(), Name = "HimPromTorg", Description  = "Chemicals for everebody!", CountryOfFoundation = Countries[2].Id, Photo = "" }
+            };
+
+            byte[] passwordSalt = PasswordHelper.GenerateSalt();
             User user = new User()
             {
                 Id = Guid.NewGuid(),
@@ -94,7 +70,36 @@ namespace RAMStorage
                 Photo = ""
             };
 
-            Users.Add(user);
+            Users = new List<User>() { user };
+
+            Materials = new List<Material>()
+            {
+                new Material() { Id = Guid.NewGuid(), Name = "Watter", Description  = "Simple H2O", PricePerGramm = 0.01M, BannedInCountries = new List<Guid>() { Countries[2].Id }, CreatedBy = Users[0].Id, Image = "" },
+                new Material() { Id = Guid.NewGuid(), Name = "Salt", Description  = "Simple salt", PricePerGramm = 0.35M, BannedInCountries = null, CreatedBy = Users[0].Id, Image = "" }
+            };
+
+            Formulas = new List<Formula>()
+            {
+                new Formula()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Simple formula",
+                    Description  = "Test formula",
+                    CreatedBy = Users[0].Id,
+                    SharedWith = new List<Guid>() { Companies[2].Id },
+                    MaterialsWithPercentQuantity = new Dictionary<Guid, int>()
+                    {
+                        { Materials[0].Id, 90 },
+                        { Materials[1].Id, 10 }
+                    },
+                    WeightInGramms = 100M
+                }
+            };
+
+            Projects = new List<Project>()
+            {
+                new Project() { Id = Guid.NewGuid(), Name = "Test proj", Description  = "Test proj 1", DevelopedByCompany = Users[0].CompanyId, Formula = Formulas[0].Id }
+            };
         }
 
         #region Country methods
@@ -445,6 +450,7 @@ namespace RAMStorage
             formulaFromList.Description = formula.Description ?? formulaFromList.Description;
             formulaFromList.MaterialsWithPercentQuantity = formula.MaterialsWithPercentQuantity ?? formulaFromList.MaterialsWithPercentQuantity;
             formulaFromList.SharedWith = formula.SharedWith ?? formulaFromList.SharedWith;
+            formulaFromList.WeightInGramms = formula.WeightInGramms > 0 ? formula.WeightInGramms : formulaFromList.WeightInGramms;
         }
 
         /// <summary>

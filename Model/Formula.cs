@@ -16,6 +16,8 @@ namespace Model
 
         public Dictionary<Guid, int> MaterialsWithPercentQuantity { get; set; }
 
+        public decimal WeightInGramms { get; set; }
+
         public Guid CreatedBy { get; set; }
 
         public List<Guid> SharedWith { get; set; }
