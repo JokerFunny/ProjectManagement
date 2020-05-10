@@ -14,7 +14,7 @@ namespace Model
 
         public string Description { get; set; }
 
-        public Dictionary<Guid, int> MaterialsWithQuantity { get; set; }
+        public Dictionary<Guid, int> MaterialsWithPercentQuantity { get; set; }
 
         public Guid CreatedBy { get; set; }
 

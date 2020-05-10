@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAMStorage", "RAMStorage\RAMStorage.csproj", "{448FE8AC-B696-42CA-BC1F-AA517E79B73C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{0B8C4D1A-F2D5-4A39-8DE9-2C47452B64DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{448FE8AC-B696-42CA-BC1F-AA517E79B73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{448FE8AC-B696-42CA-BC1F-AA517E79B73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{448FE8AC-B696-42CA-BC1F-AA517E79B73C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B8C4D1A-F2D5-4A39-8DE9-2C47452B64DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8C4D1A-F2D5-4A39-8DE9-2C47452B64DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8C4D1A-F2D5-4A39-8DE9-2C47452B64DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8C4D1A-F2D5-4A39-8DE9-2C47452B64DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
