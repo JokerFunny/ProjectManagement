@@ -1,14 +1,8 @@
-﻿using System;
+﻿using Model;
+using RAMStorage;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProjectManagement
 {
@@ -20,6 +14,50 @@ namespace ProjectManagement
         public Main()
         {
             InitializeComponent();
+            
+            var project = Storage.Projects[0];
+            ProjectViewModel projectViewModel = new ProjectViewModel()
+            {
+                Id = project.Id,
+                Name = project.Name,
+                Description = project.Description,
+                FormulaName = Storage.Formulas.Find(f => f.Id == project.Formula).Name,
+                Weight = Storage.Formulas.Find(f => f.Id == project.Formula).WeightInGramms,
+                TotalPrice = 100,
+                DevelopedByCompany = Storage.Companies.Find(c => c.Id == project.DevelopedByCompany).Name
+            };
+            projectsList.ItemsSource = new List<ProjectViewModel>() { projectViewModel };
+
+            projectsList.SelectedIndex = 0;
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            Close();
+        }
+
+        private void Material_Click(object sender, RoutedEventArgs e)
+            => _CreateTargetWindowWithOpenCheck<MaterialWindow>(nameof(MaterialWindow));
+
+        private void Formula_Click(object sender, RoutedEventArgs e)
+            => _CreateTargetWindowWithOpenCheck<FormulaWindow>(nameof(FormulaWindow));
+
+        private void Project_Click(object sender, RoutedEventArgs e)
+            => _CreateTargetWindowWithOpenCheck<ProjectWindow>(nameof(ProjectWindow));
+
+        private void _CreateTargetWindowWithOpenCheck<T>(string windowName) where T : Window
+        {
+            if (WindowHelper.IsWindowOpen<T>())
+            {
+                MessageBox.Show($"{windowName} already opened!");
+            }
+            else
+            {
+                T targetWindow = (T)Activator.CreateInstance(typeof(T));
+                targetWindow.Show();
+            }
         }
     }
 }

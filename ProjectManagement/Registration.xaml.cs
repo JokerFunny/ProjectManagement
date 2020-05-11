@@ -2,6 +2,11 @@
 using System.Text.RegularExpressions;
 using RAMStorage;
 using System.Linq;
+using BLL.Interfaces;
+using BLL;
+using DAL;
+using Model;
+using System;
 
 namespace ProjectManagement
 {
@@ -10,10 +15,14 @@ namespace ProjectManagement
     /// </summary>  
     public partial class Registration : Window
     {
+        private readonly IUsersService _rUserService;
+
         public Registration()
         {
+            _rUserService = new UserService(new UserRAMRepository());
             InitializeComponent();
-            comboBoxCompany.ItemsSource = Storage.Companies.Select(c => c.Name);
+
+            comboBoxCompany.ItemsSource = Storage.Companies.Select(c => c.Name); // handle with service
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
@@ -33,7 +42,7 @@ namespace ProjectManagement
             textBoxFirstName.Text = "";
             textBoxLastName.Text = "";
             textBoxEmail.Text = "";
-            comboBoxCompany.ItemsSource = Storage.Companies.Select(c => c.Name);
+            comboBoxCompany.ItemsSource = Storage.Companies.Select(c => c.Name); // change to service impl
             passwordBox1.Password = "";
             passwordBoxConfirm.Password = "";
         }
@@ -58,38 +67,33 @@ namespace ProjectManagement
             }
             else
             {
-                string firstname = textBoxFirstName.Text;
-                string lastname = textBoxLastName.Text;
-                string email = textBoxEmail.Text;
-                string password = passwordBox1.Password;
-                if (passwordBox1.Password.Length == 0)
+                NewUser newUser = new NewUser()
                 {
-                    errormessage.Text = "Enter password.";
-                    passwordBox1.Focus();
-                }
-                else if (passwordBoxConfirm.Password.Length == 0)
-                {
-                    errormessage.Text = "Enter Confirm password.";
-                    passwordBoxConfirm.Focus();
-                }
-                else if (passwordBox1.Password != passwordBoxConfirm.Password)
-                {
-                    errormessage.Text = "Confirm password must be same as password.";
-                    passwordBoxConfirm.Focus();
-                }
+                    FirstName = textBoxFirstName.Text,
+                    LastName = textBoxLastName.Text,
+                    Email = textBoxEmail.Text,
+                    Password = passwordBox1.Password,
+                    CompanyId = Guid.Empty //textBlockCompany.Text and with service
+                };
+
+                var result = _rUserService.RegisterNewUser(newUser, out string errorMessage);
+
+                if (!result)
+                    errormessage.Text = errorMessage;
                 else
                 {
                     errormessage.Text = "";
-                    string address = textBlockCompany.Text;
-                    //SqlConnection con = new SqlConnection("Data Source=TESTPURU;Initial Catalog=Data;User ID=sa;Password=wintellect");
-                    //con.Open();
-                    //SqlCommand cmd = new SqlCommand("Insert into Registration (FirstName,LastName,Email,Password,Address) values('" + firstname + "','" + lastname + "','" + email + "','" + password + "','" + address + "')", con);
-                    //cmd.CommandType = CommandType.Text;
-                    //cmd.ExecuteNonQuery();
-                    //con.Close();
-                    errormessage.Text = "You have Registered successfully.";
+
+                    MessageBox.Show("You have Registered successfully!");
                     Reset();
                 }
+
+                //SqlConnection con = new SqlConnection("Data Source=TESTPURU;Initial Catalog=Data;User ID=sa;Password=wintellect");
+                //con.Open();
+                //SqlCommand cmd = new SqlCommand("Insert into Registration (FirstName,LastName,Email,Password,Address) values('" + firstname + "','" + lastname + "','" + email + "','" + password + "','" + address + "')", con);
+                //cmd.CommandType = CommandType.Text;
+                //cmd.ExecuteNonQuery();
+                //con.Close();
             }
         }
     }

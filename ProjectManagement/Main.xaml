@@ -1,10 +1,39 @@
 ﻿<Window x:Class="ProjectManagement.Main"        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
-        Title="Main page" MaxHeight="387" MaxWidth="528" MinHeight="387" MinWidth="528" Background="Black">
-    <Grid Height="350" Width="525" Background="Bisque">
+        Title="Main page" MaxHeight="637" MaxWidth="1203" MinHeight="637" MinWidth="1203" Background="Black">
+    <Grid Height="600" Width="1200" Background="Bisque">
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="60,16,0,0" Name="LoginHeading" Text="Home:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed" Grid.ColumnSpan="2" Grid.Column="1" Width="49"/>
-        <TextBlock Height="50" Margin="0,44,0,0" Name="textBlockHeading" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="12" FontStyle="Italic" Padding="5" Grid.Column="2" Width="412">  
-            Here you can see all projects developed by you company, create new material, <LineBreak /> formula and project:
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="60,46,0,0" Name="textBlockName" Text="" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <TextBlock Height="50" Margin="0,16,0,0" Name="textBlockHeading" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15" FontStyle="Italic" Padding="5" Grid.Column="2">  
+            Here you can see all projects developed by you company, create new material, formula and project:
         </TextBlock>
+        <Grid Margin="400,100,400,0" Background="White" Height="200" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="252*" />
+            </Grid.RowDefinitions>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="65,20,0,0" Name="textBlockMaterial" FontSize="15" Text="Materials" VerticalAlignment="Top"/>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="65,80,0,0" Name="textBlockFormula" FontSize="15" Text="Formulas" VerticalAlignment="Top"/>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="65,140,0,0" Name="textBlockProjects" FontSize="15" Text="Projects" VerticalAlignment="Top"/>
+            <Button Content="Material window" Height="23" HorizontalAlignment="Left" Margin="200,20,0,0" Name="buttonMaterialWindow" VerticalAlignment="Top" Width="120" Click="Material_Click" />
+            <Button Content="Formula window" Height="23" HorizontalAlignment="Left" Margin="200,80,0,0" Name="buttonFormulaWindow" VerticalAlignment="Top" Width="120" Click="Formula_Click" />
+            <Button Content="Project window" Height="23" HorizontalAlignment="Left" Margin="200,140,0,0" Name="buttonCancelWindow" VerticalAlignment="Top" Width="120" Click="Project_Click" />
+        </Grid>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,335,0,0" Name="textBlockProjectsForCompany" FontSize="15" Text="Projects created in your company:" VerticalAlignment="Top"/>
+        <Grid Margin="0,360,0,50" Background="White" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="1200">
+            <ListView Name="projectsList">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Width="220">Id</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Name</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="100">Description</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=FormulaName}" Width="100">Formula name</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Weight}" Width="50">Weight</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Width="80">Total price</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=DevelopedByCompany}" Width="150">Developed by company</GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Button Content="Exit" Height="23" Margin="0,545,0,0" Name="buttonExit" HorizontalAlignment="Center" Width="70" Click="Exit_Click" />
     </Grid>
 </Window>

@@ -11,6 +11,8 @@ namespace RAMStorage
     /// </summary>
     public static class Storage
     {
+        public static Guid CurrentUser { get; set; }
+
         /// <summary>
         /// List of <see cref="Country"/>
         /// </summary>
@@ -24,7 +26,7 @@ namespace RAMStorage
         /// <summary>
         /// List of <see cref="User"/>
         /// </summary>
-        public static List<User> Users { get; private set; } = new List<User>();
+        public static List<User> Users { get; private set; }
 
         /// <summary>
         /// List of <see cref="Material"/>
@@ -43,6 +45,8 @@ namespace RAMStorage
 
         static Storage()
         {
+            CurrentUser = Guid.Empty;
+
             Countries = new List<Country>()
             {
                 new Country() { Id = Guid.NewGuid(), Name = "Ukraine", LawLink = "" },
@@ -63,7 +67,7 @@ namespace RAMStorage
                 Id = Guid.NewGuid(),
                 FirstName = "Ivan",
                 LastName = "Ivanov",
-                Email = "Emai123@e.com",
+                Email = "Emai123@ea.com",
                 CompanyId = Companies[0].Id,
                 PasswordSalt = Convert.ToBase64String(passwordSalt),
                 PasswordHash = PasswordHelper.HashPassword("Testpass123", passwordSalt),
@@ -235,83 +239,37 @@ namespace RAMStorage
         /// </summary>
         /// <param name="user">Target user</param>
         /// <exception cref="ArgumentNullException">If <paramref name="user"/> is null</exception>
-        /// <exception cref="ArgumentException">
-        ///     If user with email from <paramref name="user"/> already exist in <see cref="Users"/>
-        /// </exception>
-        public static void AddUser(NewUser user)
+        public static void AddUser(User user)
         {
             if (user == null)
                 throw new ArgumentNullException($"{nameof(user)} can`t be null!");
 
-            if (string.IsNullOrWhiteSpace(user.Password))
-                throw new ArgumentNullException("Password can`t be null or empty");
-
-            var userFromList = Users.FirstOrDefault(c => c.Email == user.Email);
-            if (userFromList != null)
-                throw new ArgumentException($"User witn email {user.Email} already exist");
-
-            if (!PasswordHelper.IsPasswordSatisfied(user.Password, out string errorMessage))
-                throw new ArgumentException(errorMessage);
-
-            byte[] passwordSalt = PasswordHelper.GenerateSalt();
-            string passwordHash = PasswordHelper.HashPassword(user.Password, passwordSalt);
-
-            User newUser = new User()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = Convert.ToBase64String(passwordSalt),
-                CompanyId = user.CompanyId,
-                Photo = user.Photo
-            };
-
-            Users.Add(newUser);
+            Users.Add(user);
         }
 
         /// <summary>
-        /// Update <see cref="User"/> by <paramref name="email"/> for <see cref="Users"/>
+        /// Update <see cref="User"/> by email for <see cref="Users"/>
         /// </summary>
-        /// <param name="email">Target user email</param>
-        /// <param name="firstName">First name</param>
-        /// <param name="lastName">Last name</param>
-        /// <param name="password">Password</param>
-        /// <param name="photo">Target photo</param>
-        /// <exception cref="ArgumentNullException">If <paramref name="email"/> is null</exception>
+        /// <param name="newUser">Target user</param>
+        /// <exception cref="ArgumentNullException">If <paramref name="newUser.Email"/> is null</exception>
         /// <exception cref="ArgumentNullException">
         ///     If company with name <paramref name="companyName"/> don`t exist in <see cref="Companies"/>
         /// </exception>
         /// <exception cref="ArgumentException">
         ///     Country with name <paramref name="countryName"/> don`t exist in <see cref="Countries"/>
         /// </exception>
-        public static void UpdateUser(string email, string firstName = null, string lastName = null, string password = null, string photo = null) //probably later change to NewUser model
+        public static void UpdateUser(User newUser)
         {
-            if (string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(newUser.Email))
                 throw new ArgumentNullException($"Email can`t be null or empty!");
 
-            User userFromList = Users.FirstOrDefault(u => u.Email == email);
-            if (userFromList == null)
-                throw new ArgumentNullException($"User witn email {email} don`t exist");
+            User userFromList = Users.FirstOrDefault(u => u.Email == newUser.Email);
 
-            byte[] passwordSalt = null;
-            string passwordHash = null;
-
-            if (!string.IsNullOrWhiteSpace(password))
-            {
-                if (!PasswordHelper.IsPasswordSatisfied(password, out string errorMessage))
-                    throw new ArgumentException(errorMessage);
-
-                passwordSalt = PasswordHelper.GenerateSalt();
-                passwordHash = PasswordHelper.HashPassword(password, passwordSalt);
-            }
-
-            userFromList.FirstName = firstName ?? userFromList.FirstName;
-            userFromList.LastName = lastName ?? userFromList.LastName;
-            userFromList.PasswordSalt = passwordSalt != null ? Convert.ToBase64String(passwordSalt) : userFromList.PasswordSalt;
-            userFromList.PasswordHash = passwordHash ?? userFromList.PasswordHash;
-            userFromList.Photo = photo ?? userFromList.Photo;
+            userFromList.FirstName = newUser.FirstName;
+            userFromList.LastName = newUser.LastName;
+            userFromList.PasswordSalt = newUser.PasswordSalt;
+            userFromList.PasswordHash = newUser.PasswordHash;
+            userFromList.Photo = newUser.Photo;
         }
 
         /// <summary>
@@ -319,17 +277,12 @@ namespace RAMStorage
         /// </summary>
         /// <param name="userEmail">Target user email</param>
         /// <exception cref="ArgumentNullException">If <paramref name="userEmail"/> is null</exception>
-        /// <exception cref="ArgumentNullException">
-        ///     If user with name <paramref name="userEmail"/> don`t exist in <see cref="Users"/>
-        /// </exception>
         public static void DeleteUser(string userEmail)
         {
             if (string.IsNullOrWhiteSpace(userEmail))
                 throw new ArgumentNullException($"User email can`t be null or empty!");
 
             User user = Users.FirstOrDefault(u => u.Email == userEmail);
-            if (user == null)
-                throw new ArgumentNullException($"{nameof(user)} don`t exist in Users list");
 
             Users.Remove(user);
         }

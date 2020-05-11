@@ -1,5 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using Model;
+using BLL.Interfaces;
+using System.Text.RegularExpressions;
 using System.Windows;
+using BLL;
+using DAL;
 
 namespace ProjectManagement
 {
@@ -8,8 +12,11 @@ namespace ProjectManagement
     /// </summary>
     public partial class Login : Window
     {
+        private readonly IUsersService _rUserService;
+
         public Login()
         {
+            _rUserService = new UserService(new UserRAMRepository());
             InitializeComponent();
         }
 
@@ -31,6 +38,23 @@ namespace ProjectManagement
             }
             else
             {
+                LoginModel loginModel = new LoginModel()
+                {
+                    Email = textBoxEmail.Text,
+                    Password = passwordBox1.Password
+                };
+
+                var result = _rUserService.Connect(loginModel, out string errorMessage);
+
+                if (!result)
+                    errormessage.Text = errorMessage;
+
+                string userName = _rUserService.GetUserName(loginModel.Email);
+
+                main.textBlockName.Text = $"Welcome, {userName}";
+                main.Show();
+                Close();
+
                 //string email = textBoxEmail.Text;
                 //string password = passwordBox1.Password;
                 ////SqlConnection con = new SqlConnection("Data Source=TESTPURU;Initial Catalog=Data;User ID=sa;Password=wintellect");
