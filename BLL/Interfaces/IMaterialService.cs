@@ -52,5 +52,17 @@ namespace BLL.Interfaces
         /// Gets all materials
         /// </summary>
         IEnumerable<Material> GetAllMaterials();
+
+        /// <summary>
+        /// Get list of <see cref="MaterialViewModel"/>
+        /// </summary>
+        IEnumerable<MaterialViewModel> GetMaterialViewModel();
+
+        /// <summary>
+        /// Get material creator id by <paramref name="materialId"/>
+        /// </summary>
+        /// <param name="materialId">Target it</param>
+        /// <returns></returns>
+        Guid GetCreatorByMaterialId(Guid materialId);
     }
 }

@@ -10,7 +10,7 @@ namespace DAL
     /// <summary>
     /// RAM implementation of <see cref="IMaterialRepository"/>
     /// </summary>
-    class MaterialRAMRepository : IMaterialRepository
+    public class MaterialRAMRepository : IMaterialRepository
     {
         /// <summary>
         /// <see cref="IMaterialRepository.AddMaterial(Material)"/>
@@ -45,6 +45,13 @@ namespace DAL
             => Storage.Materials.Where(m => m.Id == id)
             .Select(m => m.Name)
             .FirstOrDefault();
+
+        /// <summary>
+        /// <see cref="IMaterialRepository.GetCreatorByMaterialId(Guid)"/>
+        /// </summary>
+        public Guid GetCreatorByMaterialId(Guid materialId)
+            => Storage.Materials.Where(m => m.Id == materialId)
+            .FirstOrDefault().CreatedBy;
 
         /// <summary>
         /// <see cref="IMaterialRepository.UpdateMaterial(Material)"/>

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Model
 {
-    /// <summary>
-    /// Model for Material
-    /// </summary>
-    public class Material
+    public class MaterialViewModel
     {
         public Guid Id { get; set; }
 
@@ -16,8 +12,8 @@ namespace Model
 
         public int PricePerGramm { get; set; }
 
-        public Guid CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
-        public List<Guid> BannedInCountries { get; set; }
+        public string BannedInCountries { get; set; }
     }
 }

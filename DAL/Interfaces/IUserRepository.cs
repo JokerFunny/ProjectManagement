@@ -45,9 +45,25 @@ namespace DAL.Interfaces
         string GetUserName(string email);
 
         /// <summary>
+        /// Get user name by <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">Target id</param>
+        string GetUserName(Guid id);
+
+        /// <summary>
         /// Add current user id
         /// </summary>
         /// <param name="id">Target id</param>
         void AddCurrentUser(Guid id);
+
+        /// <summary>
+        /// Get current user
+        /// </summary>
+        User GetCurrentUser();
+
+        /// <summary>
+        /// Clear current user
+        /// </summary>
+        void ClearCurrentUser();
     }
 }

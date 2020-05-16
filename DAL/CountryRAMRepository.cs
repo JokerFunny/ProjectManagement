@@ -10,13 +10,20 @@ namespace DAL
     /// <summary>
     /// RAM implementation of <see cref="ICountryRepository"/>
     /// </summary>
-    class CountryRAMRepository : ICountryRepository
+    public class CountryRAMRepository : ICountryRepository
     {
         /// <summary>
         /// <see cref="ICountryRepository.GetAllCountries"/>
         /// </summary>
         public IEnumerable<Country> GetAllCountries()
             => Storage.Countries;
+
+        /// <summary>
+        /// <see cref="ICountryRepository.GetCountryIdByName(string)"/>
+        /// </summary>
+        public Guid GetCountryIdByName(string name)
+            => Storage.Countries.Where(c => c.Name == name)
+            .FirstOrDefault().Id;
 
         /// <summary>
         /// <see cref="ICountryRepository.GetCountryNameById(Guid)"/>

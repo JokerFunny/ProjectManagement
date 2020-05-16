@@ -16,6 +16,13 @@ namespace DAL.Interfaces
         string GetMaterialNameById(Guid id);
 
         /// <summary>
+        /// Get material creator id by <paramref name="materialId"/>
+        /// </summary>
+        /// <param name="materialId">Target it</param>
+        /// <returns></returns>
+        Guid GetCreatorByMaterialId(Guid materialId);
+
+        /// <summary>
         /// Add new material
         /// </summary>
         /// <param name="material">Targer material</param>

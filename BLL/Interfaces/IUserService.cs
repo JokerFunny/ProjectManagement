@@ -69,5 +69,21 @@ namespace BLL.Interfaces
         /// </summary>
         /// <param name="email">Target id</param>
         string GetUserName(string email);
+
+        /// <summary>
+        /// Get user name by <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">Target id</param>
+        string GetUserName(Guid id);
+
+        /// <summary>
+        /// Get current user from repository
+        /// </summary>
+        User GetCurrentUser();
+
+        /// <summary>
+        /// Remove current user
+        /// </summary>
+        void ClearCurrentUser();
     }
 }

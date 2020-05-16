@@ -90,5 +90,16 @@ namespace BLL
 
             return _rCompanyRepository.UpdateCompany(companyName, description, countryName, photo);
         }
+
+        /// <summary>
+        /// <see cref="ICompanyService.GetCompanyIdByName(string)"/>
+        /// </summary>
+        public Guid GetCompanyIdByName(string companyName)
+        {
+            if (string.IsNullOrWhiteSpace(companyName))
+                throw new ArgumentNullException("Company name can`t be null or empty");
+
+            return _rCompanyRepository.GetCompanyIdByName(companyName);
+        }
     }
 }

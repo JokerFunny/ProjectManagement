@@ -45,5 +45,11 @@ namespace DAL.Interfaces
         /// </summary>
         /// <param name="companyName">Target company name</param>
         Company GetCompanyByName(string companyName);
+
+        /// <summary>
+        /// Get company id by <paramref name="companyName"/>
+        /// </summary>
+        /// <param name="companyName">Target name</param>
+        Guid GetCompanyIdByName(string companyName);
     }
 }

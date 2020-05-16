@@ -10,7 +10,7 @@ namespace DAL
     /// <summary>
     /// RAM implementation of <see cref="ICompanyRepository"/>
     /// </summary>
-    class CompanyRAMRepository : ICompanyRepository
+    public class CompanyRAMRepository : ICompanyRepository
     {
         /// <summary>
         /// <see cref="ICompanyRepository.DeleteCompany(string)"/>
@@ -58,5 +58,11 @@ namespace DAL
 
             return true;
         }
+
+        /// <summary>
+        /// <see cref="ICompanyRepository.GetCompanyIdByName(string)"/>
+        /// </summary>
+        public Guid GetCompanyIdByName(string companyName)
+            => Storage.Companies.Where(c => c.Name == companyName).FirstOrDefault().Id;
     }
 }

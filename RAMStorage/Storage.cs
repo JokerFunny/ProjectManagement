@@ -78,8 +78,8 @@ namespace RAMStorage
 
             Materials = new List<Material>()
             {
-                new Material() { Id = Guid.NewGuid(), Name = "Watter", Description  = "Simple H2O", PricePerGramm = 0.01M, BannedInCountries = new List<Guid>() { Countries[2].Id }, CreatedBy = Users[0].Id, Image = "" },
-                new Material() { Id = Guid.NewGuid(), Name = "Salt", Description  = "Simple salt", PricePerGramm = 0.35M, BannedInCountries = null, CreatedBy = Users[0].Id, Image = "" }
+                new Material() { Id = Guid.NewGuid(), Name = "Watter", Description  = "Simple H2O", PricePerGramm = 1, BannedInCountries = new List<Guid>() { Countries[2].Id }, CreatedBy = Users[0].Id },
+                new Material() { Id = Guid.NewGuid(), Name = "Salt", Description  = "Simple salt", PricePerGramm = 35, BannedInCountries = null, CreatedBy = Users[0].Id }
             };
 
             Formulas = new List<Formula>()
@@ -316,12 +316,11 @@ namespace RAMStorage
             if (material == null)
                 throw new ArgumentNullException($"{nameof(material)} can`t be null");
 
-            var materialFromList = Materials.FirstOrDefault(m => m.Equals(material));
+            var materialFromList = Materials.FirstOrDefault(m => m.Id == material.Id);
 
             materialFromList.Name = material.Name ?? materialFromList.Name;
             materialFromList.Description = material.Description ?? materialFromList.Description;
             materialFromList.BannedInCountries = material.BannedInCountries ?? materialFromList.BannedInCountries;
-            materialFromList.Image = material.Image ?? materialFromList.Image;
         }
 
         /// <summary>

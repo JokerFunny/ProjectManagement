@@ -1,12 +1,57 @@
 ﻿<Window x:Class="ProjectManagement.MaterialWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProjectManagement"
-        mc:Ignorable="d"
-        Title="MaterialWindow" Height="450" Width="800">
-    <Grid>
-        
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        Title="Material page" MaxHeight="637" MaxWidth="1203" MinHeight="637" MinWidth="1203" Background="Black">
+    <Grid Height="600" Width="1200" Background="Bisque">
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="60,16,0,0" Name="WindowHeading" Text="Material" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed" Grid.ColumnSpan="2" Grid.Column="1" Width="70"/>
+        <TextBlock Height="80" Margin="0,16,0,0" Name="textBlockHeading" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15" FontStyle="Italic" Padding="5" Grid.Column="2">  
+            Here you can see all materials, create your own or update created by you:<LineBreak />
+            For create new material click Add button, fill fields and click Save button<LineBreak />
+            For update select some item from list on bottom, click Update button, refill some props and click Save button
+        </TextBlock>
+        <Grid Margin="158,88,162,0" Background="White" Height="242" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="252*" />
+            </Grid.RowDefinitions>
+            <Button Content="Add material" Height="23" HorizontalAlignment="Left" Margin="20,20,0,0" Name="buttonAdd" VerticalAlignment="Top" Width="120" Click="Add_Click" />
+            <Button Content="Update material" Height="23" HorizontalAlignment="Left" Margin="20,80,0,0" Name="buttonUpdate" VerticalAlignment="Top" Width="120" Click="Update_Click" />
+            <Button Content="Reset" Height="23" HorizontalAlignment="Left" Margin="20,140,0,0" Name="buttonReset" VerticalAlignment="Top" Width="120" Click="Reset_Click" />
+            <Button Content="Save changes" Visibility="Hidden" Height="23" HorizontalAlignment="Left" Margin="20,200,0,0" Name="buttonSaveAdd" VerticalAlignment="Top" Width="120" Click="SaveAdd_Click" />
+            <Button Content="Save changes" Visibility="Hidden" Height="23" HorizontalAlignment="Left" Margin="20,200,0,0" Name="buttonSaveUpdate" VerticalAlignment="Top" Width="120" Click="SaveUpdate_Click" />
+
+            <TextBlock Height="20" HorizontalAlignment="Left" Margin="200,200,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" />
+            
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="200,20,0,0" Name="textBlockName" Text="Material Name:" VerticalAlignment="Top" Width="110" />
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="200,70,0,0" Name="textBlockDescription" Text="Material description:" VerticalAlignment="Top" Width="110" />
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="200,120,0,0" Name="textBlockPricePerGramm" Text="Price per gramm(in cents)" VerticalAlignment="Top" Width="150" />
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="570,20,0,0" Name="textBlockBannedIn" Text="Banned in countries:" VerticalAlignment="Top" Width="150" Grid.RowSpan="2" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="350,20,0,0" Name="textBoxName" VerticalAlignment="Top" Width="200" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="350,70,0,0" Name="textBoxDescription" VerticalAlignment="Top" Width="200" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="350,120,0,0" Name="textBoxPricePerGramm" VerticalAlignment="Top" Width="200" />
+            <ListBox Name="countriesCheckList" ItemsSource="{Binding Countries}" Background="Azure" Margin="570,50,50,50">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding TheText}" Margin="0,5,0,0"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,335,0,0" Name="textBlockMaterials" FontSize="15" Text="List of all materials:" VerticalAlignment="Top"/>
+        <Grid Margin="0,360,0,50" Background="White" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="1200">
+            <ListView Name="materialsList" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Width="220">Id</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Name</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="100">Description</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=PricePerGramm}" Width="150">Price per gramm (in cents)</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=CreatedBy}" Width="80">Created by</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=BannedInCountries}" Width="150">List of banned countries</GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Button Content="Exit" Height="23" Margin="0,545,0,0" Name="buttonExit" HorizontalAlignment="Center" Width="70" Click="Exit_Click" />
     </Grid>
 </Window>

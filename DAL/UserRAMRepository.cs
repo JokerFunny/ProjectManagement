@@ -60,6 +60,16 @@ namespace DAL
         }
 
         /// <summary>
+        /// <see cref="IUserRepository.GetUserName(Guid)"/>
+        /// </summary>
+        public string GetUserName(Guid id)
+        {
+            User user = Storage.Users.FirstOrDefault(u => u.Id == id);
+
+            return user.FirstName + " " + user.LastName;
+        }
+
+        /// <summary>
         /// <see cref="IUserRepository.GetUserPhoto(Guid)"/>
         /// </summary>
         public string GetUserPhoto(Guid userId)
@@ -78,5 +88,18 @@ namespace DAL
 
             return true;
         }
+
+        /// <summary>
+        /// <see cref="IUserRepository.GetCurrentUser"/>
+        /// </summary>
+        public User GetCurrentUser()
+            => Storage.Users.Where(u => u.Id == Storage.CurrentUser)
+            .FirstOrDefault();
+
+        /// <summary>
+        /// <see cref="IUserRepository.ClearCurrentUser"/>
+        /// </summary>
+        public void ClearCurrentUser()
+            => Storage.CurrentUser = Guid.Empty;
     }
 }

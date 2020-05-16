@@ -50,5 +50,11 @@ namespace BLL.Interfaces
         /// Gets all companies
         /// </summary>
         IEnumerable<Company> GetAllCompanies();
+
+        /// <summary>
+        /// Gets company Id by <paramref name="companyName"/>
+        /// </summary>
+        /// <param name="companyName">Target name</param>
+        Guid GetCompanyIdByName(string companyName);
     }
 }

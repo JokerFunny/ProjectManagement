@@ -40,6 +40,17 @@ namespace BLL
         }
 
         /// <summary>
+        /// <see cref="ICountryService.GetCountryIdByName(string)"/>
+        /// </summary>
+        public Guid GetCountryIdByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("Country naem can`t be null or empty!");
+
+            return _rCountryRepository.GetCountryIdByName(name);
+        }
+
+        /// <summary>
         /// <see cref="ICountryService.UpdateCountryLaw(string, string, out string)"/>
         /// </summary>
         public bool UpdateCountryLaw(string countryName, string lawLink, out string errorMessage)

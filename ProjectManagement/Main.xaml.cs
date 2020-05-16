@@ -1,7 +1,7 @@
-﻿using Model;
-using RAMStorage;
+﻿using BLL;
+using BLL.Interfaces;
+using DAL;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace ProjectManagement
@@ -11,22 +11,19 @@ namespace ProjectManagement
     /// </summary>
     public partial class Main : Window
     {
+        private readonly IProjectService _rProjectService;
+        private readonly IUsersService _rUsersService;
+
         public Main()
         {
             InitializeComponent();
-            
-            var project = Storage.Projects[0];
-            ProjectViewModel projectViewModel = new ProjectViewModel()
-            {
-                Id = project.Id,
-                Name = project.Name,
-                Description = project.Description,
-                FormulaName = Storage.Formulas.Find(f => f.Id == project.Formula).Name,
-                Weight = Storage.Formulas.Find(f => f.Id == project.Formula).WeightInGramms,
-                TotalPrice = 100,
-                DevelopedByCompany = Storage.Companies.Find(c => c.Id == project.DevelopedByCompany).Name
-            };
-            projectsList.ItemsSource = new List<ProjectViewModel>() { projectViewModel };
+
+            _rUsersService = new UserService(new UserRAMRepository());
+
+            _rProjectService = new ProjectService(new ProjectRAMRepository(),
+                new FormulaRAMRepository(), new CompanyRAMRepository());
+
+            projectsList.ItemsSource = _rProjectService.GetProjectViewModelByCompany(_rUsersService.GetCurrentUser().CompanyId);
 
             projectsList.SelectedIndex = 0;
         }
@@ -35,6 +32,9 @@ namespace ProjectManagement
         {
             Login login = new Login();
             login.Show();
+
+            _rUsersService.ClearCurrentUser();
+
             Close();
         }
 

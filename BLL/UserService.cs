@@ -83,6 +83,12 @@ namespace BLL
             => _rUserRepository.GetUserName(email);
 
         /// <summary>
+        /// <see cref="IUsersService.GetUserName(Guid)"/>
+        /// </summary>
+        public string GetUserName(Guid id)
+            => _rUserRepository.GetUserName(id);
+
+        /// <summary>
         /// <see cref="IUsersService.GetUserPhoto(Guid)"/>
         /// </summary>
         public string GetUserPhoto(Guid userId)
@@ -186,5 +192,17 @@ namespace BLL
 
             return _rUserRepository.UpdateUser(user);
         }
+
+        /// <summary>
+        /// <see cref="IUsersService.GetCurrentUser"/>
+        /// </summary>
+        public User GetCurrentUser()
+            => _rUserRepository.GetCurrentUser();
+
+        /// <summary>
+        /// <see cref="IUsersService.ClearCurrentUser"/>
+        /// </summary>
+        public void ClearCurrentUser()
+            => _rUserRepository.ClearCurrentUser();
     }
 }

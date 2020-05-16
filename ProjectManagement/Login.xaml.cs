@@ -21,7 +21,6 @@ namespace ProjectManagement
         }
 
         Registration registration = new Registration();
-        Main main = new Main();
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -51,6 +50,7 @@ namespace ProjectManagement
 
                 string userName = _rUserService.GetUserName(loginModel.Email);
 
+                Main main = new Main();
                 main.textBlockName.Text = $"Welcome, {userName}";
                 main.Show();
                 Close();

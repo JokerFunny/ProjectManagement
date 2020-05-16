@@ -10,7 +10,7 @@ namespace DAL
     /// <summary>
     /// RAM implementation of <see cref="IFormulaRepository"/>
     /// </summary>
-    class FormulaRAMRepository : IFormulaRepository
+    public class FormulaRAMRepository : IFormulaRepository
     {
         /// <summary>
         /// <see cref="IFormulaRepository.AddFormula(Formula)"/>

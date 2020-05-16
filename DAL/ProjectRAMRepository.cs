@@ -10,7 +10,7 @@ namespace DAL
     /// <summary>
     /// RAM implementation of <see cref="IProjectRepository"/>
     /// </summary>
-    class ProjectRAMRepository : IProjectRepository
+    public class ProjectRAMRepository : IProjectRepository
     {
         /// <summary>
         /// <see cref="IProjectRepository.AddPorject(Project)"/>
@@ -42,7 +42,7 @@ namespace DAL
         /// <see cref="IProjectRepository.GetProjectByCompany(Guid)"/>
         /// </summary>
         public IEnumerable<Project> GetProjectByCompany(Guid companyId)
-            => Storage.Projects.Where(p => p.Id == companyId);
+            => Storage.Projects.Where(p => p.DevelopedByCompany == companyId);
 
         /// <summary>
         /// <see cref="IProjectRepository.UpdateProject(Project)"/>
