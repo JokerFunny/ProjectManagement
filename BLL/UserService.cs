@@ -16,7 +16,7 @@ namespace BLL
         /// <summary>
         /// Default ctor
         /// </summary>
-        /// <param name="userRepository"></param>
+        /// <param name="userRepository"><see cref="IUserRepository"/></param>
         public UserService(IUserRepository userRepository)
         {
             _rUserRepository = userRepository;

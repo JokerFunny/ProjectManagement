@@ -26,5 +26,11 @@ namespace DAL.Interfaces
         /// Gets all countries
         /// </summary>
         IEnumerable<Country> GetAllCountries();
+
+        /// <summary>
+        /// Get <see cref="Country"/> by <paramref name="countryName"/>
+        /// </summary>
+        /// <param name="countryName">Target name</param>
+        Country GetCountryByName(string countryName);
     }
 }

@@ -38,5 +38,11 @@ namespace DAL.Interfaces
         /// </summary>
         /// <param name="userId">User id</param>
         IEnumerable<Formula> GetAllFormulasForUser(Guid userId);
+
+        /// <summary>
+        /// Get <see cref="Formula"/> by <paramref name="Id"/>
+        /// </summary>
+        /// <param name="Id">Target Id</param>
+        Formula GetFormulaById(Guid Id);
     }
 }

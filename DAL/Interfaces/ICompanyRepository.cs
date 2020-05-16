@@ -39,5 +39,11 @@ namespace DAL.Interfaces
         /// Gets all companies
         /// </summary>
         IEnumerable<Company> GetAllCompanies();
+
+        /// <summary>
+        /// Get company by <paramref name="companyName"/>
+        /// </summary>
+        /// <param name="companyName">Target company name</param>
+        Company GetCompanyByName(string companyName);
     }
 }

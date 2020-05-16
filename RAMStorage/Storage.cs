@@ -143,8 +143,6 @@ namespace RAMStorage
                 throw new ArgumentNullException($"Contry name can`t be null or empty!");
 
             var countryFromList = Countries.FirstOrDefault(c => c.Name == countryName);
-            if (countryFromList == null)
-                throw new ArgumentNullException($"Country witn name {countryName} don`t exist");
 
             countryFromList.LawLink = lawLink;
         }
@@ -193,8 +191,6 @@ namespace RAMStorage
                 throw new ArgumentNullException($"Company name can`t be null or empty!");
 
             var companyFromList = Companies.FirstOrDefault(c => c.Name == companyName);
-            if (companyFromList == null)
-                throw new ArgumentNullException($"Company witn name {companyName} don`t exist");
 
             if (!string.IsNullOrWhiteSpace(countryName))
             {
@@ -224,8 +220,6 @@ namespace RAMStorage
                 throw new ArgumentNullException($"Company name can`t be null or empty!");
 
             Company company = Companies.FirstOrDefault(c => c.Name == companyName);
-            if (company == null)
-                throw new ArgumentNullException($"Company with name {companyName} don`t exist in Companies list");
 
             Companies.Remove(company);
         }
@@ -304,10 +298,7 @@ namespace RAMStorage
             if (material == null)
                 throw new ArgumentNullException($"{nameof(material)} can`t be null!");
 
-            // override Equals and GetHashCode for Material
             var materialFromList = Materials.FirstOrDefault(c => c.Equals(material));
-            if (materialFromList != null)
-                throw new ArgumentException($"The same material already exist");
 
             Materials.Add(material);
         }
@@ -325,10 +316,7 @@ namespace RAMStorage
             if (material == null)
                 throw new ArgumentNullException($"{nameof(material)} can`t be null");
 
-            // override Equals and GetHashCode for Material
             var materialFromList = Materials.FirstOrDefault(m => m.Equals(material));
-            if (materialFromList != null)
-                throw new ArgumentException($"The same material already exist");
 
             materialFromList.Name = material.Name ?? materialFromList.Name;
             materialFromList.Description = material.Description ?? materialFromList.Description;
@@ -350,8 +338,6 @@ namespace RAMStorage
                 throw new ArgumentNullException($"Target id can`t be empty");
 
             Material material = Materials.FirstOrDefault(m => m.Id == id);
-            if (material == null)
-                throw new ArgumentNullException($"Material with id {id} don`t exist in Materials list");
 
             Materials.Remove(material);
         }
@@ -373,10 +359,7 @@ namespace RAMStorage
             if (formula == null)
                 throw new ArgumentNullException($"{nameof(formula)} can`t be null!");
 
-            // override Equals and GetHashCode for Material
             var formulaFromList = Formulas.FirstOrDefault(c => c.Equals(formula));
-            if (formulaFromList != null)
-                throw new ArgumentException($"The same formula already exist");
 
             Formulas.Add(formula);
         }
@@ -396,8 +379,6 @@ namespace RAMStorage
 
             // override Equals and GetHashCode for Formula
             var formulaFromList = Formulas.FirstOrDefault(f => f.Equals(formula));
-            if (formulaFromList != null)
-                throw new ArgumentException($"The same formula already exist");
 
             formulaFromList.Name = formula.Name ?? formulaFromList.Name;
             formulaFromList.Description = formula.Description ?? formulaFromList.Description;
@@ -420,8 +401,6 @@ namespace RAMStorage
                 throw new ArgumentNullException($"Target id can`t be empty");
 
             Formula formula = Formulas.FirstOrDefault(f => f.Id == id);
-            if (formula == null)
-                throw new ArgumentNullException($"Formula with id {id} don`t exist in Formulas list");
 
             Formulas.Remove(formula);
         }
@@ -443,10 +422,7 @@ namespace RAMStorage
             if (project == null)
                 throw new ArgumentNullException($"{nameof(project)} can`t be null!");
 
-            // override Equals and GetHashCode for Project
             var projectFromList = Projects.FirstOrDefault(p => p.Equals(project));
-            if (projectFromList != null)
-                throw new ArgumentException($"The same project already exist");
 
             Projects.Add(project);
         }
@@ -464,10 +440,7 @@ namespace RAMStorage
             if (project == null)
                 throw new ArgumentNullException($"{nameof(project)} can`t be null");
 
-            // override Equals and GetHashCode for Project
             var projectFromList = Projects.FirstOrDefault(p => p.Equals(project));
-            if (projectFromList != null)
-                throw new ArgumentException($"The same project already exist");
 
             projectFromList.Name = project.Name ?? projectFromList.Name;
             projectFromList.Description = project.Description ?? projectFromList.Description;
@@ -488,8 +461,6 @@ namespace RAMStorage
                 throw new ArgumentNullException($"Target id can`t be empty");
 
             Project project = Projects.FirstOrDefault(p => p.Id == id);
-            if (project == null)
-                throw new ArgumentNullException($"Project with id {id} don`t exist in Projects list");
 
             Projects.Remove(project);
         }

@@ -37,5 +37,11 @@ namespace DAL.Interfaces
         /// Gets all materials
         /// </summary>
         IEnumerable<Material> GetAllMaterials();
+
+        /// <summary>
+        /// Get <see cref="Material"/> by <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">Target id</param>
+        Material GetMaterialById(Guid id);
     }
 }
