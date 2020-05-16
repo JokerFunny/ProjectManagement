@@ -22,9 +22,7 @@ namespace ProjectManagement
 
             InitializeComponent();
 
-            comboBoxCompany.ItemsSource = _rCompanyService.GetAllCompaniesNames();
-
-            comboBoxCompany.SelectedIndex = 0;
+            Reset();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
@@ -35,9 +33,7 @@ namespace ProjectManagement
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
-        {
-            Reset();
-        }
+            => Reset();
 
         public void Reset()
         {

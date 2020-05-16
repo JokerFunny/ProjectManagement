@@ -39,6 +39,20 @@ namespace DAL
             => Storage.Formulas.Where(f => f.CreatedBy == userId);
 
         /// <summary>
+        /// <see cref="IFormulaRepository.GetAllFormulasNames"/>
+        /// </summary>
+        public IEnumerable<string> GetAllFormulasNames()
+            => Storage.Formulas.Select(f => f.Name);
+
+        /// <summary>
+        /// <see cref="IFormulaRepository.GetFormulaIdByName(string)"/>
+        /// </summary>
+        public Guid GetFormulaIdByName(string name)
+            => Storage.Formulas.Where(f => f.Name == name)
+            .Select(f => f.Id)
+            .FirstOrDefault();
+
+        /// <summary>
         /// <see cref="IFormulaRepository.GetFormulaNameById(Guid)"/>
         /// </summary>
         public string GetFormulaNameById(Guid id)

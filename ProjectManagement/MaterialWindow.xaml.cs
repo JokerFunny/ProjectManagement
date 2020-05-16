@@ -83,27 +83,47 @@ namespace ProjectManagement
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
+            => Reset();
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            Reset();
+            MaterialViewModel material = (MaterialViewModel)materialsList.SelectedItem;
+
+            if (_rMaterialService.GetCreatorByMaterialId(material.Id) != _rUsersService.GetCurrentUser().Id)
+            {
+                errormessage.Text = "You can delete only materials created by you!";
+                return;
+            }
+
+            var result = MessageBox.Show("Delete material ?", "Material",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                if (_rMaterialService.DeleteMaterial(material.Id, out string error))
+                    Reset();
+                else
+                    errormessage.Text = error;
+            }
         }
 
         #region Saves
 
         private void SaveAdd_Click(object sender, RoutedEventArgs e)
         {
-            string name = textBlockName.Text;
-            string priceText = textBlockPricePerGramm.Text;
+            string name = textBoxName.Text;
+            string priceText = textBoxPricePerGramm.Text;
             int price = 0;
 
             if (string.IsNullOrWhiteSpace(name))
             {
                 errormessage.Text = "Name can`t be null or empty";
-                textBlockName.Focus();
+                textBoxName.Focus();
             }
             else if (!string.IsNullOrWhiteSpace(priceText) && !int.TryParse(priceText, out price))
             {
                 errormessage.Text = "Price shoul be a naturel number";
-                textBlockPricePerGramm.Focus();
+                textBoxPricePerGramm.Focus();
             }
             else
             {
@@ -155,7 +175,7 @@ namespace ProjectManagement
                     Name = name,
                     Description = textBoxDescription.Text,
                     PricePerGramm = price,
-                    //CreatedBy = _rUsersService.GetCurrentUser().Id,
+                    CreatedBy = _rUsersService.GetCurrentUser().Id,
                     BannedInCountries = _GetSelectedCountries()
                 };
 

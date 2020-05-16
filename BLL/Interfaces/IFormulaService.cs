@@ -16,6 +16,12 @@ namespace BLL.Interfaces
         string GetFormulaNameById(Guid id);
 
         /// <summary>
+        /// Get formula id by <paramref name="name"/>
+        /// </summary>
+        /// <param name="name">Target name</param>
+        Guid GetFormulaIdByName(string name);
+
+        /// <summary>
         /// Add new formula
         /// </summary>
         /// <param name="formula">Targer formula</param>
@@ -53,5 +59,10 @@ namespace BLL.Interfaces
         /// </summary>
         /// <param name="userId">User id</param>
         IEnumerable<Formula> GetAllFormulasForUser(Guid userId);
+
+        /// <summary>
+        /// Get all <see cref="Formula.Name"/>
+        /// </summary>
+        IEnumerable<string> GetAllFormulasNames();
     }
 }

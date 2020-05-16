@@ -20,8 +20,6 @@ namespace ProjectManagement
             InitializeComponent();
         }
 
-        Registration registration = new Registration();
-
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
             if (textBoxEmail.Text.Length == 0)
@@ -82,6 +80,7 @@ namespace ProjectManagement
 
         private void buttonRegister_Click(object sender, RoutedEventArgs e)
         {
+            Registration registration = new Registration(); 
             registration.Show();
             Close();
         }

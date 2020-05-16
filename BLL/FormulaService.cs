@@ -84,6 +84,23 @@ namespace BLL
         }
 
         /// <summary>
+        /// <see cref="IFormulaService.GetAllFormulasNames"/>
+        /// </summary>
+        public IEnumerable<string> GetAllFormulasNames()
+            => _rFormulaRepository.GetAllFormulasNames();
+
+        /// <summary>
+        /// <see cref="IFormulaRepository.GetFormulaIdByName(string)"/>
+        /// </summary>
+        public Guid GetFormulaIdByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("Formula name can`t be null or empty");
+
+            return _rFormulaRepository.GetFormulaIdByName(name);
+        }
+
+        /// <summary>
         /// <see cref="IFormulaService.GetFormulaNameById(Guid)"/>
         /// </summary>
         public string GetFormulaNameById(Guid id)

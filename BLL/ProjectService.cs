@@ -15,6 +15,7 @@ namespace BLL
         private readonly IProjectRepository _rProjectRepository;
         private readonly IFormulaRepository _rFormulaRepository;
         private readonly ICompanyRepository _rCompanyRepository;
+        private readonly IMaterialRepository _rMaterialRepository;
 
         /// <summary>
         /// Default ctor
@@ -22,13 +23,16 @@ namespace BLL
         /// <param name="projectRepository"><see cref="IProjectRepository"/></param>
         /// <param name="formulaRepository"><see cref="IFormulaRepository"/></param>
         /// <param name="companyRepository"><see cref="ICompanyRepository"/></param>
+        /// <param name="materialRepository"><see cref="IMaterialRepository"/></param>
         public ProjectService(IProjectRepository projectRepository,
             IFormulaRepository formulaRepository,
-            ICompanyRepository companyRepository)
+            ICompanyRepository companyRepository, 
+            IMaterialRepository materialRepository)
         {
             _rProjectRepository = projectRepository;
             _rFormulaRepository = formulaRepository;
             _rCompanyRepository = companyRepository;
+            _rMaterialRepository = materialRepository;
         }
 
         /// <summary>
@@ -103,6 +107,14 @@ namespace BLL
             {
                 Formula targetFormula = _rFormulaRepository.GetFormulaById(project.Formula);
 
+                decimal totalPrice = 0M;
+
+                foreach (var material in targetFormula.MaterialsWithPercentQuantity)
+                {
+                    totalPrice += _rMaterialRepository.GetMaterialById(material.Key).PricePerGramm * material.Value
+                        * targetFormula.WeightInGramms / 100;
+                }
+
                 projectsView.Add(new ProjectViewModel()
                 {
                     Id = project.Id,
@@ -110,7 +122,7 @@ namespace BLL
                     Description = project.Description,
                     FormulaName = targetFormula.Name,
                     Weight = targetFormula.WeightInGramms,
-                    TotalPrice = 100,
+                    TotalPrice = totalPrice,
                     DevelopedByCompany = _rCompanyRepository.GetCompanyNameById(project.DevelopedByCompany)
                 });
             }
@@ -133,7 +145,9 @@ namespace BLL
 
             Project projectFromRepository = _rProjectRepository.GetAllProjects()
                 .Where(p => p.Name == project.Name
-                && p.DevelopedByCompany == project.DevelopedByCompany)
+                && p.DevelopedByCompany == project.DevelopedByCompany
+                && p.Description == project.Description
+                && p.Formula == project.Formula)
                 .FirstOrDefault();
 
             if (projectFromRepository != null)

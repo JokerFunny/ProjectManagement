@@ -2,6 +2,9 @@
 
 namespace Model
 {
+    /// <summary>
+    /// View model for Material
+    /// </summary>
     public class MaterialViewModel
     {
         public Guid Id { get; set; }

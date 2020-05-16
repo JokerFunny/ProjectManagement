@@ -21,10 +21,11 @@ namespace ProjectManagement
             _rUsersService = new UserService(new UserRAMRepository());
 
             _rProjectService = new ProjectService(new ProjectRAMRepository(),
-                new FormulaRAMRepository(), new CompanyRAMRepository());
+                                                  new FormulaRAMRepository(),
+                                                  new CompanyRAMRepository(),
+                                                  new MaterialRAMRepository());
 
             projectsList.ItemsSource = _rProjectService.GetProjectViewModelByCompany(_rUsersService.GetCurrentUser().CompanyId);
-
             projectsList.SelectedIndex = 0;
         }
 
