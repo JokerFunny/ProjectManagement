@@ -101,7 +101,10 @@ namespace ProjectManagement
             if (result == MessageBoxResult.Yes)
             {
                 if (_rMaterialService.DeleteMaterial(material.Id, out string error))
+                {
                     Reset();
+                    errormessage.Text = "Succesfully deleted!";
+                }
                 else
                     errormessage.Text = error;
             }
@@ -120,7 +123,7 @@ namespace ProjectManagement
                 errormessage.Text = "Name can`t be null or empty";
                 textBoxName.Focus();
             }
-            else if (!string.IsNullOrWhiteSpace(priceText) && !int.TryParse(priceText, out price))
+            else if (!string.IsNullOrWhiteSpace(priceText) && !int.TryParse(priceText, out price) && price > 0)
             {
                 errormessage.Text = "Price shoul be a naturel number";
                 textBoxPricePerGramm.Focus();
@@ -139,8 +142,8 @@ namespace ProjectManagement
 
                 if (_rMaterialService.AddMaterial(newMaterial, out string error))
                 {
-                    errormessage.Text = "Succesfully added!";
                     Reset();
+                    errormessage.Text = "Succesfully added!";
                 }
                 else
                 {
@@ -181,8 +184,8 @@ namespace ProjectManagement
 
                 if (_rMaterialService.UpdateMaterial(updateMaterial, out string error))
                 {
-                    errormessage.Text = "Succesfully updated!";
                     Reset(selectedMaterial);
+                    errormessage.Text = "Succesfully updated!";
                 }
                 else
                 {

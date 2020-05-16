@@ -13,14 +13,26 @@ namespace BLL
     public class FormulaService : IFormulaService
     {
         private readonly IFormulaRepository _rFormulaRepository;
+        private readonly ICompanyRepository _rCompanyRepository;
+        private readonly IUserRepository _rUserRepository;
+        private readonly IMaterialRepository _rMaterialRepository;
 
         /// <summary>
         /// Default ctor
         /// </summary>
         /// <param name="formulaRepository"><see cref="IFormulaRepository"/></param>
-        public FormulaService(IFormulaRepository formulaRepository)
+        /// <param name="companyRepository"><see cref="ICompanyRepository"/></param>
+        /// <param name="userRepository"><see cref="IUserRepository"/></param>
+        /// <param name="materialRepository"><see cref="IMaterialRepository"/></param>
+        public FormulaService(IFormulaRepository formulaRepository, 
+            ICompanyRepository companyRepository,
+            IUserRepository userRepository, 
+            IMaterialRepository materialRepository)
         {
             _rFormulaRepository = formulaRepository;
+            _rCompanyRepository = companyRepository;
+            _rUserRepository = userRepository;
+            _rMaterialRepository = materialRepository;
         }
 
         /// <summary>
@@ -84,6 +96,51 @@ namespace BLL
         }
 
         /// <summary>
+        /// <see cref="IFormulaService.GetFormulasViewModel"/>
+        /// </summary>
+        public IEnumerable<FormulaViewModel> GetFormulasViewModel()
+        {
+            var formulas = _rFormulaRepository.GetAllFormulas();
+            var formulasView = new List<FormulaViewModel>();
+
+            foreach (var formula in formulas)
+            {
+                List<string> companies = new List<string>();
+
+                var shared = formula.SharedWith;
+
+                if (shared != null)
+                {
+                    foreach (var companyId in shared)
+                        companies.Add(_rCompanyRepository.GetCompanyNameById(companyId));
+                }
+
+                List<string> materialsWithPecrents = new List<string>();
+
+                var materialsForFormula = formula.MaterialsWithPercentQuantity;
+
+                foreach (var material in materialsForFormula)
+                {
+                    var mat = _rMaterialRepository.GetMaterialById(material.Key);
+                    materialsWithPecrents.Add($"{mat.Name} with price {mat.PricePerGramm} with percents {material.Value}");
+                }
+
+                formulasView.Add(new FormulaViewModel()
+                {
+                    Id = formula.Id,
+                    Name = formula.Name,
+                    Description = formula.Description,
+                    MaterialsWithPercentQuantity = string.Join(", ", materialsWithPecrents),
+                    WeightInGramms = formula.WeightInGramms.ToString(),
+                    CreatedBy = _rUserRepository.GetUserName(formula.CreatedBy),
+                    SharedWith = string.Join(", ", companies)
+                });
+            }
+
+            return formulasView;
+        }
+
+        /// <summary>
         /// <see cref="IFormulaService.GetAllFormulasNames"/>
         /// </summary>
         public IEnumerable<string> GetAllFormulasNames()
@@ -135,6 +192,17 @@ namespace BLL
             }
 
             return _rFormulaRepository.UpdateFormula(formula);
+        }
+
+        /// <summary>
+        /// <see cref="IFormulaService.GetFormulaById(Guid)"/>
+        /// </summary>
+        public Formula GetFormulaById(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException("Id can`t be empty!");
+
+            return _rFormulaRepository.GetFormulaById(id);
         }
     }
 }

@@ -30,7 +30,10 @@ namespace ProjectManagement
                                                   new CompanyRAMRepository(),
                                                   new MaterialRAMRepository());
 
-            _rFormulaService = new FormulaService(new FormulaRAMRepository());
+            _rFormulaService = new FormulaService(new FormulaRAMRepository(),
+                                                  new CompanyRAMRepository(),
+                                                  new UserRAMRepository(),
+                                                  new MaterialRAMRepository());
 
             _rCompanyService = new CompanyService(new CompanyRAMRepository());
 
@@ -78,7 +81,10 @@ namespace ProjectManagement
             if (result == MessageBoxResult.Yes)
             {
                 if (_rProjectService.DeleteProject(project.Id, out string error))
+                {
                     Reset();
+                    errormessage.Text = "Succesfully deleted!";
+                }
                 else
                     errormessage.Text = error;
             }
@@ -113,8 +119,8 @@ namespace ProjectManagement
 
                 if (_rProjectService.AddPorject(newProject, out string error))
                 {
-                    errormessage.Text = "Succesfully added!";
                     Reset();
+                    errormessage.Text = "Succesfully added!";
                 }
                 else
                 {
@@ -154,8 +160,8 @@ namespace ProjectManagement
 
                 if (_rProjectService.UpdateProject(newProject, out string error))
                 {
-                    errormessage.Text = "Succesfully added!";
                     Reset();
+                    errormessage.Text = "Succesfully added!";
                 }
                 else
                 {

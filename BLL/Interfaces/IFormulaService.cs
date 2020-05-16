@@ -55,10 +55,21 @@ namespace BLL.Interfaces
         bool DeleteFormula(Guid id, out string errorMessage);
 
         /// <summary>
+        /// Get <see cref="Formula"/> by <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">Target id</param>
+        Formula GetFormulaById(Guid id);
+
+        /// <summary>
         /// Gets formulas, satisfied for company politics
         /// </summary>
         /// <param name="userId">User id</param>
         IEnumerable<Formula> GetAllFormulasForUser(Guid userId);
+
+        /// <summary>
+        /// Get list of <see cref="FormulaViewModel"/>
+        /// </summary>
+        IEnumerable<FormulaViewModel> GetFormulasViewModel();
 
         /// <summary>
         /// Get all <see cref="Formula.Name"/>

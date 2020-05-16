@@ -5,9 +5,9 @@
     <Grid Height="600" Width="1200" Background="Bisque">
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="60,16,0,0" Name="WindowHeading" Text="Project" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed" Grid.ColumnSpan="2" Grid.Column="1" Width="70"/>
         <TextBlock Height="80" Margin="0,16,0,0" Name="textBlockHeading" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="15" FontStyle="Italic" Padding="5" Grid.Column="2">  
-            Here you can see all project, developed by your company, create your own or update created by you:<LineBreak />
-            For create new company click Add button, fill fields and click Save button<LineBreak />
-            For update select some company from list on bottom, click Update button, refill some props and click Save button
+            Here you can see all project, developed by your company, create/update/delete projcet? created in your company:<LineBreak />
+            For create new project click Add button, fill fields and click Save button<LineBreak />
+            For update select some project from list on bottom, click Update button, refill some props and click Save button
         </TextBlock>
         <Grid Margin="158,88,162,0" Background="White" Height="242" VerticalAlignment="Top">
             <Grid.RowDefinitions>

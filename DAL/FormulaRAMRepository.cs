@@ -53,6 +53,19 @@ namespace DAL
             .FirstOrDefault();
 
         /// <summary>
+        /// <see cref="IFormulaRepository.GetFormulaById(Guid)"/>
+        /// </summary>
+        public Formula GetFormulaById(Guid id)
+            => Storage.Formulas.Where(f => f.Id == id)
+            .FirstOrDefault();
+
+        /// <summary>
+        /// <see cref="IFormulaRepository.GetAllFormulas"/>
+        /// </summary>
+        public IEnumerable<Formula> GetAllFormulas()
+            => Storage.Formulas;
+
+        /// <summary>
         /// <see cref="IFormulaRepository.GetFormulaNameById(Guid)"/>
         /// </summary>
         public string GetFormulaNameById(Guid id)
@@ -69,12 +82,5 @@ namespace DAL
 
             return true;
         }
-
-        /// <summary>
-        /// <see cref="IFormulaRepository.GetFormulaById(Guid)"/>
-        /// </summary>
-        public Formula GetFormulaById(Guid id)
-            => Storage.Formulas.Where(f => f.Id == id)
-            .FirstOrDefault();
     }
 }
