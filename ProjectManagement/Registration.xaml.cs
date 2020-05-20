@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 using System.Text.RegularExpressions;
 using BLL.Interfaces;
-using BLL;
-using DAL;
 using Model;
+using Autofac;
 
 namespace ProjectManagement
 {
@@ -12,13 +11,14 @@ namespace ProjectManagement
     /// </summary>  
     public partial class Registration : Window
     {
-        private readonly IUsersService _rUserService;
+        private readonly IUsersService _rUsersService;
         private readonly ICompanyService _rCompanyService;
 
         public Registration()
         {
-            _rUserService = new UserService(new UserRAMRepository());
-            _rCompanyService = new CompanyService(new CompanyRAMRepository());
+            _rUsersService = App.Container.Resolve<IUsersService>();
+
+            _rCompanyService = App.Container.Resolve<ICompanyService>();
 
             InitializeComponent();
 
@@ -91,7 +91,7 @@ namespace ProjectManagement
                     CompanyId = _rCompanyService.GetCompanyIdByName(companyName)
                 };
 
-                var result = _rUserService.RegisterNewUser(newUser, out string errorMessage);
+                var result = _rUsersService.RegisterNewUser(newUser, out string errorMessage);
 
                 if (!result)
                     errormessage.Text = errorMessage;

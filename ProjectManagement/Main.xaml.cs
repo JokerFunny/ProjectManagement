@@ -1,6 +1,5 @@
-﻿using BLL;
+﻿using Autofac;
 using BLL.Interfaces;
-using DAL;
 using System;
 using System.Windows;
 
@@ -18,12 +17,9 @@ namespace ProjectManagement
         {
             InitializeComponent();
 
-            _rUsersService = new UserService(new UserRAMRepository());
+            _rUsersService = App.Container.Resolve<IUsersService>();
 
-            _rProjectService = new ProjectService(new ProjectRAMRepository(),
-                                                  new FormulaRAMRepository(),
-                                                  new CompanyRAMRepository(),
-                                                  new MaterialRAMRepository());
+            _rProjectService = App.Container.Resolve<IProjectService>();
 
             projectsList.ItemsSource = _rProjectService.GetProjectViewModelByCompany(_rUsersService.GetCurrentUser().CompanyId);
             projectsList.SelectedIndex = 0;

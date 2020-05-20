@@ -1,6 +1,5 @@
-﻿using BLL;
+﻿using Autofac;
 using BLL.Interfaces;
-using DAL;
 using Model;
 using System;
 using System.Windows;
@@ -20,12 +19,9 @@ namespace ProjectManagement
         {
             InitializeComponent();
 
-            _rUsersService = new UserService(new UserRAMRepository());
+            _rUsersService = App.Container.Resolve<IUsersService>();
 
-            _rFormulaService = new FormulaService(new FormulaRAMRepository(), 
-                                                  new CompanyRAMRepository(),
-                                                  new UserRAMRepository(), 
-                                                  new MaterialRAMRepository());
+            _rFormulaService = App.Container.Resolve<IFormulaService>();
 
             Reset();
         }

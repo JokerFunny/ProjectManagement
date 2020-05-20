@@ -1,6 +1,5 @@
-﻿using BLL;
+﻿using Autofac;
 using BLL.Interfaces;
-using DAL;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -26,13 +25,11 @@ namespace ProjectManagement
         {
             InitializeComponent();
 
-            _rUsersService = new UserService(new UserRAMRepository());
+            _rUsersService = App.Container.Resolve<IUsersService>();
 
-            _rMaterialService = new MaterialService(new MaterialRAMRepository(),
-                                                    new CountryRAMRepository(),
-                                                    new UserRAMRepository());
+            _rMaterialService = App.Container.Resolve<IMaterialService>();
 
-            _rCountryService = new CountryService(new CountryRAMRepository());
+            _rCountryService = App.Container.Resolve<ICountryService>();
 
             materialsList.ItemsSource = _rMaterialService.GetMaterialViewModel();
 

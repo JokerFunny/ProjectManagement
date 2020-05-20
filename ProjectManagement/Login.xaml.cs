@@ -2,8 +2,7 @@
 using BLL.Interfaces;
 using System.Text.RegularExpressions;
 using System.Windows;
-using BLL;
-using DAL;
+using Autofac;
 
 namespace ProjectManagement
 {
@@ -12,11 +11,12 @@ namespace ProjectManagement
     /// </summary>
     public partial class Login : Window
     {
-        private readonly IUsersService _rUserService;
+        private readonly IUsersService _rUsersService;
 
         public Login()
         {
-            _rUserService = new UserService(new UserRAMRepository());
+            _rUsersService = App.Container.Resolve<IUsersService>();
+
             InitializeComponent();
         }
 
@@ -41,17 +41,21 @@ namespace ProjectManagement
                     Password = passwordBox1.Password
                 };
 
-                var result = _rUserService.Connect(loginModel, out string errorMessage);
+                var result = _rUsersService.Connect(loginModel, out string errorMessage);
 
                 if (!result)
+                {
                     errormessage.Text = errorMessage;
+                }
+                else
+                {
+                    string userName = _rUsersService.GetUserName(loginModel.Email);
 
-                string userName = _rUserService.GetUserName(loginModel.Email);
-
-                Main main = new Main();
-                main.textBlockName.Text = $"Welcome, {userName}";
-                main.Show();
-                Close();
+                    Main main = new Main();
+                    main.textBlockName.Text = $"Welcome, {userName}";
+                    main.Show();
+                    Close();
+                }
 
                 //string email = textBoxEmail.Text;
                 //string password = passwordBox1.Password;
