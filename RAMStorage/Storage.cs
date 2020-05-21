@@ -199,25 +199,25 @@ namespace RAMStorage
         /// <exception cref="ArgumentException">
         ///     Country with name <paramref name="countryName"/> don`t exist in <see cref="Countries"/>
         /// </exception>
-        public static void UpdateCompany(string companyName, string description = null, string countryName = null, string photo = null)
+        public static void UpdateCompany(Company company)
         {
-            if (string.IsNullOrWhiteSpace(companyName))
+            if (string.IsNullOrWhiteSpace(company.Name))
                 throw new ArgumentNullException($"Company name can`t be null or empty!");
 
-            var companyFromList = Companies.FirstOrDefault(c => c.Name == companyName);
+            var companyFromList = Companies.FirstOrDefault(c => c.Name == company.Name);
 
-            if (!string.IsNullOrWhiteSpace(countryName))
+            if (company.CountryOfFoundation != Guid.Empty)
             {
-                Country country = Countries.FirstOrDefault(c => c.Name == countryName);
+                Country country = Countries.FirstOrDefault(c => c.Id == company.CountryOfFoundation);
 
                 if (country == null)
-                    throw new ArgumentException($"Country with name {countryName} don`t exist!");
+                    throw new ArgumentException($"Country with name {company.CountryOfFoundation} don`t exist!");
 
                 companyFromList.CountryOfFoundation = companyFromList.Id;
             }
 
-            companyFromList.Description = description;
-            companyFromList.Photo = photo;
+            companyFromList.Description = company.Description;
+            companyFromList.Photo = company.Photo;
         }
 
         /// <summary>

@@ -50,11 +50,11 @@ namespace DAL
             .FirstOrDefault();
 
         /// <summary>
-        /// <see cref="ICompanyRepository.UpdateCompany(string, string, string, string)"/>
+        /// <see cref="ICompanyRepository.UpdateCompany(Company)"/>
         /// </summary>
-        public bool UpdateCompany(string companyName, string description, string countryName, string photo)
+        public bool UpdateCompany(Company company)
         {
-            Storage.UpdateCompany(companyName, description, countryName, photo);
+            Storage.UpdateCompany(company);
 
             return true;
         }

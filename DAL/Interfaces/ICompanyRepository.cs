@@ -21,13 +21,10 @@ namespace DAL.Interfaces
         string GetCompanyNameById(Guid id);
 
         /// <summary>
-        /// Update company <paramref name="companyName"/>
+        /// Update company <paramref name="company"/>
         /// </summary>
-        /// <param name="companyName">Target company name</param>
-        /// <param name="description">Target description</param>
-        /// <param name="countryName">Target country name</param>
-        /// <param name="photo">Target photo</param>
-        bool UpdateCompany(string companyName, string description, string countryName, string photo);
+        /// <param name="company">Target company</param>
+        bool UpdateCompany(Company company);
 
         /// <summary>
         /// Delete company by <paramref name="companyName"/>

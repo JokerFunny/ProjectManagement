@@ -22,18 +22,15 @@ namespace BLL.Interfaces
         string GetCompanyNameById(Guid id);
 
         /// <summary>
-        /// Update company <paramref name="companyName"/>
+        /// Update company <paramref name="company"/>
         /// </summary>
-        /// <param name="companyName">Target company name</param>
-        /// <param name="description">Target description</param>
-        /// <param name="countryName">Target country name</param>
-        /// <param name="photo">Target photo</param>
+        /// <param name="company">Target company</param>
         /// <param name="errorMessage">If error happens - will contains it description</param>
         /// <returns>
         ///     True - if update succesfull
         ///     False - if error happens
         /// </returns>
-        bool UpdateCompany(string companyName, string description, string countryName, string photo, out string errorMessage);
+        bool UpdateCompany(Company company, out string errorMessage);
 
         /// <summary>
         /// Delete company by <paramref name="companyName"/>

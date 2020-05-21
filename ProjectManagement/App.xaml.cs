@@ -26,6 +26,7 @@ namespace ProjectManagement
         {
             _InitContainer();
 
+            // add-migration ForeignKeys -ProjectName DAL -StartUpProjectName ProjectManagement
             Login login = new Login();
 
             login.Show();
@@ -48,7 +49,7 @@ namespace ProjectManagement
             builder.RegisterType<FormulaRAMRepository>().As<IFormulaRepository>();
             builder.RegisterType<MaterialRAMRepository>().As<IMaterialRepository>();
             builder.RegisterType<ProjectRAMRepository>().As<IProjectRepository>();
-            builder.RegisterType<UserRAMRepository>().As<IUserRepository>();
+            builder.RegisterType<UserDBRepository>().As<IUserRepository>();
 
             // BLL registration
             builder.RegisterType<CompanyService>().As<ICompanyService>();

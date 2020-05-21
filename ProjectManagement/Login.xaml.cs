@@ -58,8 +58,6 @@ namespace ProjectManagement
                     Close();
                 }
 
-                //string email = textBoxEmail.Text;
-                //string password = passwordBox1.Password;
                 ////SqlConnection con = new SqlConnection("Data Source=TESTPURU;Initial Catalog=Data;User ID=sa;Password=wintellect");
                 ////con.Open();
                 ////SqlCommand cmd = new SqlCommand("Select * from Registration where Email='" + email + "'  and password='" + password + "'", con);

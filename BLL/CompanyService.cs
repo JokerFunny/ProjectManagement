@@ -69,26 +69,26 @@ namespace BLL
         }
 
         /// <summary>
-        /// <see cref="ICompanyService.UpdateCompany(string, string, string, string, out string)"/>
+        /// <see cref="ICompanyService.UpdateCompany(Company, out string)"/>
         /// </summary>
-        public bool UpdateCompany(string companyName, string description, string countryName, string photo, out string errorMessage)
+        public bool UpdateCompany(Company company, out string errorMessage)
         {
             errorMessage = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(companyName))
+            if (string.IsNullOrWhiteSpace(company.Name))
             {
                 errorMessage = "Company name can`t be null or empty!";
                 return false;
             }
 
-            var company = _rCompanyRepository.GetCompanyByName(companyName);
-            if (company == null)
+            var companyFromRepo = _rCompanyRepository.GetCompanyByName(company.Name);
+            if (companyFromRepo == null)
             {
-                errorMessage = $"Company witn name {companyName} don`t exist";
+                errorMessage = $"Company witn name {company.Name} don`t exist";
                 return false;
             }
 
-            return _rCompanyRepository.UpdateCompany(companyName, description, countryName, photo);
+            return _rCompanyRepository.UpdateCompany(company);
         }
 
         /// <summary>
