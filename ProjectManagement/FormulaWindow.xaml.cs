@@ -19,9 +19,9 @@ namespace ProjectManagement
         {
             InitializeComponent();
 
-            _rUsersService = App.Container.Resolve<IUsersService>();
+            _rUsersService = IoC.Container.Resolve<IUsersService>();
 
-            _rFormulaService = App.Container.Resolve<IFormulaService>();
+            _rFormulaService = IoC.Container.Resolve<IFormulaService>();
 
             Reset();
         }

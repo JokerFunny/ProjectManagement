@@ -1,8 +1,9 @@
-﻿using System.Windows;
-using System.Text.RegularExpressions;
+﻿using Autofac;
 using BLL.Interfaces;
+using System;
+using System.Windows;
+using System.Text.RegularExpressions;
 using Model;
-using Autofac;
 
 namespace ProjectManagement
 {
@@ -16,9 +17,9 @@ namespace ProjectManagement
 
         public Registration()
         {
-            _rUsersService = App.Container.Resolve<IUsersService>();
+            _rUsersService = IoC.Container.Resolve<IUsersService>();
 
-            _rCompanyService = App.Container.Resolve<ICompanyService>();
+            _rCompanyService = IoC.Container.Resolve<ICompanyService>();
 
             InitializeComponent();
 

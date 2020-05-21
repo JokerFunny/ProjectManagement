@@ -17,9 +17,9 @@ namespace ProjectManagement
         {
             InitializeComponent();
 
-            _rUsersService = App.Container.Resolve<IUsersService>();
+            _rUsersService = IoC.Container.Resolve<IUsersService>();
 
-            _rProjectService = App.Container.Resolve<IProjectService>();
+            _rProjectService = IoC.Container.Resolve<IProjectService>();
 
             projectsList.ItemsSource = _rProjectService.GetProjectViewModelByCompany(_rUsersService.GetCurrentUser().CompanyId);
             projectsList.SelectedIndex = 0;

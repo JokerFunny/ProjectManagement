@@ -1,7 +1,9 @@
-﻿using Infrastructure;
+﻿using Autofac;
 using Model;
+using RAMStorage.Serialization;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace RAMStorage
@@ -11,6 +13,8 @@ namespace RAMStorage
     /// </summary>
     public static class Storage
     {
+        private static readonly ISerialize _rSerializer;
+
         public static Guid CurrentUser { get; set; }
 
         /// <summary>
@@ -45,65 +49,75 @@ namespace RAMStorage
 
         static Storage()
         {
+            _rSerializer = IoC.Container.Resolve<ISerialize>();
+
+            string path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\RAMStorage\"));
+
+            Load(path);
+
             CurrentUser = Guid.Empty;
 
-            Countries = new List<Country>()
-            {
-                new Country() { Id = Guid.NewGuid(), Name = "Ukraine", LawLink = "" },
-                new Country() { Id = Guid.NewGuid(), Name = "Belgium", LawLink = "" },
-                new Country() { Id = Guid.NewGuid(), Name = "Italy", LawLink = "" },
-            };
+            #region InitData
 
-            Companies = new List<Company>()
-            {
-                new Company() { Id = Guid.NewGuid(), Name = "TOVARIS4", Description  = "Development for U", CountryOfFoundation = Countries[0].Id, Photo = "" },
-                new Company() { Id = Guid.NewGuid(), Name = "Sobratia", Description  = "Family company", CountryOfFoundation = Countries[1].Id, Photo = "" },
-                new Company() { Id = Guid.NewGuid(), Name = "HimPromTorg", Description  = "Chemicals for everebody!", CountryOfFoundation = Countries[2].Id, Photo = "" }
-            };
+            //Countries = new List<Country>()
+            //{
+            //    new Country() { Id = Guid.NewGuid(), Name = "Ukraine", LawLink = "" },
+            //    new Country() { Id = Guid.NewGuid(), Name = "Belgium", LawLink = "" },
+            //    new Country() { Id = Guid.NewGuid(), Name = "Italy", LawLink = "" },
+            //};
 
-            byte[] passwordSalt = PasswordHelper.GenerateSalt();
-            User user = new User()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Ivan",
-                LastName = "Ivanov",
-                Email = "Emai123@ea.com",
-                CompanyId = Companies[0].Id,
-                PasswordSalt = Convert.ToBase64String(passwordSalt),
-                PasswordHash = PasswordHelper.HashPassword("Testpass123", passwordSalt),
-                Photo = ""
-            };
+            //Companies = new List<Company>()
+            //{
+            //    new Company() { Id = Guid.NewGuid(), Name = "TOVARIS4", Description  = "Development for U", CountryOfFoundation = Countries[0].Id, Photo = "" },
+            //    new Company() { Id = Guid.NewGuid(), Name = "Sobratia", Description  = "Family company", CountryOfFoundation = Countries[1].Id, Photo = "" },
+            //    new Company() { Id = Guid.NewGuid(), Name = "HimPromTorg", Description  = "Chemicals for everebody!", CountryOfFoundation = Countries[2].Id, Photo = "" }
+            //};
 
-            Users = new List<User>() { user };
+            //byte[] passwordSalt = PasswordHelper.GenerateSalt();
+            //User user = new User()
+            //{
+            //    Id = Guid.NewGuid(),
+            //    FirstName = "Ivan",
+            //    LastName = "Ivanov",
+            //    Email = "Emai123@ea.com",
+            //    CompanyId = Companies[0].Id,
+            //    PasswordSalt = Convert.ToBase64String(passwordSalt),
+            //    PasswordHash = PasswordHelper.HashPassword("Testpass123", passwordSalt),
+            //    Photo = ""
+            //};
 
-            Materials = new List<Material>()
-            {
-                new Material() { Id = Guid.NewGuid(), Name = "Watter", Description  = "Simple H2O", PricePerGramm = 1, BannedInCountries = new List<Guid>() { Countries[2].Id }, CreatedBy = Users[0].Id },
-                new Material() { Id = Guid.NewGuid(), Name = "Salt", Description  = "Simple salt", PricePerGramm = 35, BannedInCountries = null, CreatedBy = Users[0].Id }
-            };
+            //Users = new List<User>() { user };
 
-            Formulas = new List<Formula>()
-            {
-                new Formula()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Simple formula",
-                    Description  = "Test formula",
-                    CreatedBy = Users[0].Id,
-                    SharedWith = new List<Guid>() { Companies[2].Id },
-                    MaterialsWithPercentQuantity = new Dictionary<Guid, int>()
-                    {
-                        { Materials[0].Id, 90 },
-                        { Materials[1].Id, 10 }
-                    },
-                    WeightInGramms = 100M
-                }
-            };
+            //Materials = new List<Material>()
+            //{
+            //    new Material() { Id = Guid.NewGuid(), Name = "Watter", Description  = "Simple H2O", PricePerGramm = 1, BannedInCountries = new List<Guid>() { Countries[2].Id }, CreatedBy = Users[0].Id },
+            //    new Material() { Id = Guid.NewGuid(), Name = "Salt", Description  = "Simple salt", PricePerGramm = 35, BannedInCountries = null, CreatedBy = Users[0].Id }
+            //};
 
-            Projects = new List<Project>()
-            {
-                new Project() { Id = Guid.NewGuid(), Name = "Test proj", Description  = "Test proj 1", DevelopedByCompany = Users[0].CompanyId, Formula = Formulas[0].Id }
-            };
+            //Formulas = new List<Formula>()
+            //{
+            //    new Formula()
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Simple formula",
+            //        Description  = "Test formula",
+            //        CreatedBy = Users[0].Id,
+            //        SharedWith = new List<Guid>() { Companies[2].Id },
+            //        MaterialsWithPercentQuantity = new Dictionary<Guid, int>()
+            //        {
+            //            { Materials[0].Id, 90 },
+            //            { Materials[1].Id, 10 }
+            //        },
+            //        WeightInGramms = 100M
+            //    }
+            //};
+
+            //Projects = new List<Project>()
+            //{
+            //    new Project() { Id = Guid.NewGuid(), Name = "Test proj", Description  = "Test proj 1", DevelopedByCompany = Users[0].CompanyId, Formula = Formulas[0].Id }
+            //};
+
+            #endregion
         }
 
         #region Country methods
@@ -462,6 +476,38 @@ namespace RAMStorage
             Project project = Projects.FirstOrDefault(p => p.Id == id);
 
             Projects.Remove(project);
+        }
+
+        #endregion
+
+        #region Serialization
+
+        /// <summary>
+        /// Serialize objects by <paramref name="pathPosition"/>
+        /// </summary>
+        /// <param name="pathPosition">Target path</param>
+        public static void Save(string pathPosition)
+        {
+            _rSerializer.Save(pathPosition + "companies", Companies);
+            _rSerializer.Save(pathPosition + "countries", Countries);
+            _rSerializer.Save(pathPosition + "formulas", Formulas);
+            _rSerializer.Save(pathPosition + "materials", Materials);
+            _rSerializer.Save(pathPosition + "projects", Projects);
+            _rSerializer.Save(pathPosition + "users", Users);
+        }
+
+        /// <summary>
+        /// Deserialize object for init setup with <paramref name="pathPosition"/>
+        /// </summary>
+        /// <param name="pathPosition">Target path</param>
+        public static void Load(string pathPosition)
+        {
+            Companies = _rSerializer.LoadEntities<Company>(pathPosition + "companies");
+            Countries = _rSerializer.LoadEntities<Country>(pathPosition + "countries");
+            Formulas = _rSerializer.LoadEntities<Formula>(pathPosition + "formulas");
+            Materials = _rSerializer.LoadEntities<Material>(pathPosition + "materials");
+            Projects = _rSerializer.LoadEntities<Project>(pathPosition + "projects");
+            Users = _rSerializer.LoadEntities<User>(pathPosition + "users");
         }
 
         #endregion

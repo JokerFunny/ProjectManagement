@@ -1,8 +1,9 @@
-﻿using Model;
+﻿using Autofac;
 using BLL.Interfaces;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows;
-using Autofac;
+using Model;
 
 namespace ProjectManagement
 {
@@ -15,7 +16,7 @@ namespace ProjectManagement
 
         public Login()
         {
-            _rUsersService = App.Container.Resolve<IUsersService>();
+            _rUsersService = IoC.Container.Resolve<IUsersService>();
 
             InitializeComponent();
         }

@@ -1,10 +1,13 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 using Autofac;
-using Autofac.Core;
 using BLL;
 using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
+using RAMStorage;
+using RAMStorage.Serialization;
 
 namespace ProjectManagement
 {
@@ -13,8 +16,6 @@ namespace ProjectManagement
     /// </summary>
     public partial class App : Application
     {
-        public static IContainer Container { get; private set; }
-
         /// <summary>
         /// Default ctor
         /// </summary>
@@ -32,7 +33,9 @@ namespace ProjectManagement
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            // serialize here
+            string path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\RAMStorage\"));
+
+            Storage.Save(path);
         }
 
         private void _InitContainer()
@@ -55,7 +58,10 @@ namespace ProjectManagement
             builder.RegisterType<ProjectService>().As<IProjectService>();
             builder.RegisterType<UserService>().As<IUsersService>();
 
-            Container = builder.Build();
+            // Serialization
+            builder.RegisterType<JSONDataContractSerialization>().As<ISerialize>();
+
+            IoC.BuildContainer(builder);
         }
     }
 }

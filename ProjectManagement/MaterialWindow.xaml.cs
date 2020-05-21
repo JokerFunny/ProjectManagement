@@ -25,11 +25,11 @@ namespace ProjectManagement
         {
             InitializeComponent();
 
-            _rUsersService = App.Container.Resolve<IUsersService>();
+            _rUsersService = IoC.Container.Resolve<IUsersService>();
 
-            _rMaterialService = App.Container.Resolve<IMaterialService>();
+            _rMaterialService = IoC.Container.Resolve<IMaterialService>();
 
-            _rCountryService = App.Container.Resolve<ICountryService>();
+            _rCountryService = IoC.Container.Resolve<ICountryService>();
 
             materialsList.ItemsSource = _rMaterialService.GetMaterialViewModel();
 
