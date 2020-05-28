@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bdae70e0-2bb1-4945-a5de-51d619020076" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>true</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8081/RegistrationServiceMQ.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RegistrationServiceMQ.wsdl" MetadataType="Wsdl" ID="2ba5dc3e-fa6c-4d7a-b20f-9e92abcd89f0" SourceId="1" SourceUrl="http://localhost:8081/RegistrationServiceMQ.svc?wsdl" />
+    <MetadataFile FileName="RegistrationServiceMQ.xsd" MetadataType="Schema" ID="67ad20bd-d336-4c63-9eea-0511ae98422e" SourceId="1" SourceUrl="http://localhost:8081/RegistrationServiceMQ.svc?xsd=xsd0" />
+    <MetadataFile FileName="RegistrationServiceMQ1.xsd" MetadataType="Schema" ID="3eb8dd65-6c46-42d8-974a-28b9acb1eecd" SourceId="1" SourceUrl="http://localhost:8081/RegistrationServiceMQ.svc?xsd=xsd1" />
+    <MetadataFile FileName="RegistrationServiceMQ2.xsd" MetadataType="Schema" ID="62fbe5e5-3a39-4b90-88de-1b12b5599862" SourceId="1" SourceUrl="http://localhost:8081/RegistrationServiceMQ.svc?xsd=xsd2" />
+    <MetadataFile FileName="RegistrationServiceMQ.disco" MetadataType="Disco" ID="8d0f1bdc-88f0-4571-95d8-0ff89bf13224" SourceId="1" SourceUrl="http://localhost:8081/RegistrationServiceMQ.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
