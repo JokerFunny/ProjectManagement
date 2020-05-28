@@ -9,12 +9,12 @@ namespace DAL
     public class ProjectManagementContext : DbContext
     {
         // Common DbSets
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<Formula> Formulas { get; set; }
-        public DbSet<Material> Materials { get; set; }
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Formula> Formulas { get; set; }
+        public virtual DbSet<Material> Materials { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         /// <summary>
         /// Default ctor

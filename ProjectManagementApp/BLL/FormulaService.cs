@@ -119,10 +119,13 @@ namespace BLL
 
                 var materialsForFormula = formula.MaterialsWithPercentQuantity;
 
-                foreach (var material in materialsForFormula)
+                if (materialsForFormula != null)
                 {
-                    var mat = _rMaterialRepository.GetMaterialById(material.Key);
-                    materialsWithPecrents.Add($"{mat.Name} with price {mat.PricePerGramm} with percents {material.Value}");
+                    foreach (var material in materialsForFormula)
+                    {
+                        var mat = _rMaterialRepository.GetMaterialById(material.Key);
+                        materialsWithPecrents.Add($"{mat.Name} with price {mat.PricePerGramm} with percents {material.Value}");
+                    }
                 }
 
                 formulasView.Add(new FormulaViewModel()

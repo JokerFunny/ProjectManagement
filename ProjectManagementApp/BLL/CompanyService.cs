@@ -38,7 +38,7 @@ namespace BLL
             Company company = _rCompanyRepository.GetCompanyByName(companyName);
             if (company == null)
             {
-                errorMessage = $"{nameof(company)} don`t exist in Companies";
+                errorMessage = $"Company with name {companyName} don`t exist in Companies";
                 return false;
             }
 
@@ -74,6 +74,9 @@ namespace BLL
         public bool UpdateCompany(Company company, out string errorMessage)
         {
             errorMessage = string.Empty;
+
+            if (company == null)
+                throw new ArgumentNullException("Company can`t be null!");
 
             if (string.IsNullOrWhiteSpace(company.Name))
             {

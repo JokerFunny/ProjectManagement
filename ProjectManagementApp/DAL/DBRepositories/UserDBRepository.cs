@@ -1,4 +1,5 @@
-﻿using DAL.Interfaces;
+﻿using Autofac;
+using DAL.Interfaces;
 using Model;
 using RAMStorage;
 using System;
@@ -18,7 +19,7 @@ namespace DAL
         /// </summary>
         public UserDBRepository()
         {
-            _rProjectManagementContext = new ProjectManagementContext();
+            _rProjectManagementContext = IoC.Container.Resolve<ProjectManagementContext>();
         }
 
         /// <summary>

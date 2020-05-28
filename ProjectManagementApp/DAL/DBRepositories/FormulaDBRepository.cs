@@ -1,4 +1,5 @@
-﻿using DAL.Interfaces;
+﻿using Autofac;
+using DAL.Interfaces;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace DAL
         /// </summary>
         public FormulaDBRepository()
         {
-            _rProjectManagementContext = new ProjectManagementContext();
+            _rProjectManagementContext = IoC.Container.Resolve<ProjectManagementContext>();
         }
 
         /// <summary>

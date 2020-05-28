@@ -109,10 +109,13 @@ namespace BLL
 
                 decimal totalPrice = 0M;
 
-                foreach (var material in targetFormula.MaterialsWithPercentQuantity)
+                if (targetFormula.MaterialsWithPercentQuantity != null)
                 {
-                    totalPrice += _rMaterialRepository.GetMaterialById(material.Key).PricePerGramm * material.Value
-                        * targetFormula.WeightInGramms / 100;
+                    foreach (var material in targetFormula.MaterialsWithPercentQuantity)
+                    {
+                        totalPrice += _rMaterialRepository.GetMaterialById(material.Key).PricePerGramm * material.Value
+                            * targetFormula.WeightInGramms / 100;
+                    }
                 }
 
                 projectsView.Add(new ProjectViewModel()

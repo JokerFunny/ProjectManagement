@@ -33,6 +33,9 @@ namespace ProjectManagementFramework
         {
             var builder = new ContainerBuilder();
 
+            // DBContext
+            builder.RegisterType<ProjectManagementContext>().AsSelf();
+
             // DAL registration
             builder.RegisterType<CompanyDBRepository>().As<ICompanyRepository>();
 

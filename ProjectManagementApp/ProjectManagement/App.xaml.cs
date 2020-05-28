@@ -43,12 +43,15 @@ namespace ProjectManagement
         {
             var builder = new ContainerBuilder();
 
+            // DBContext
+            builder.RegisterType<ProjectManagementContext>().AsSelf();
+
             // DAL registration
-            builder.RegisterType<CompanyRAMRepository>().As<ICompanyRepository>();
-            builder.RegisterType<CountryRAMRepository>().As<ICountryRepository>();
-            builder.RegisterType<FormulaRAMRepository>().As<IFormulaRepository>();
-            builder.RegisterType<MaterialRAMRepository>().As<IMaterialRepository>();
-            builder.RegisterType<ProjectRAMRepository>().As<IProjectRepository>();
+            builder.RegisterType<CompanyDBRepository>().As<ICompanyRepository>();
+            builder.RegisterType<CountryDBRepository>().As<ICountryRepository>();
+            builder.RegisterType<FormulaDBRepository>().As<IFormulaRepository>();
+            builder.RegisterType<MaterialDBRepository>().As<IMaterialRepository>();
+            builder.RegisterType<ProjectDBRepository>().As<IProjectRepository>();
             builder.RegisterType<UserDBRepository>().As<IUserRepository>();
 
             // BLL registration

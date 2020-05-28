@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using Model;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace ProjectManagement
@@ -172,7 +173,7 @@ namespace ProjectManagement
             buttonSaveAdd.Visibility = Visibility.Hidden;
             textBoxName.Text = null;
             textBoxDescription.Text = null;
-            comboBoxFormula.ItemsSource = _rFormulaService.GetAllFormulasNames();
+            comboBoxFormula.ItemsSource = _rFormulaService.GetAllFormulasNames().ToList();
             comboBoxFormula.SelectedIndex = selectedFormula;
             projectsList.ItemsSource = _rProjectService.GetProjectViewModelByCompany(_rUsersService.GetCurrentUser().CompanyId);
             projectsList.SelectedIndex = selectedItem;
