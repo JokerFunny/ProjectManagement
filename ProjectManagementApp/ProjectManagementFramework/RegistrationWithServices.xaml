@@ -27,6 +27,7 @@
             <!--For password-->
             <PasswordBox Height="23" HorizontalAlignment="Left" Margin="183,140,0,0" Name="passwordBoxConfirm" VerticalAlignment="Top" Width="222" />
             <ComboBox Height="23" HorizontalAlignment="Left" Margin="183,170,0,66" Name="comboBoxCompany" VerticalAlignment="Top" Width="222" />
+            <Button Content="Submit ASMX" Height="23" HorizontalAlignment="Left" Margin="10,204,0,0" Name="SubmitASMX" VerticalAlignment="Top" Width="80" Click="SubmitASMX_Click" />
             <Button Content="Submit MQ" Height="23" HorizontalAlignment="Left" Margin="100,204,0,0" Name="SubmitMQ" VerticalAlignment="Top" Width="70" Click="SubmitMQ_Click" />
             <Button Content="Submit" Height="23" HorizontalAlignment="Left" Margin="183,204,0,0" Name="Submit" VerticalAlignment="Top" Width="70" Click="Submit_Click" />
             <Button Content="Reset" Height="23" HorizontalAlignment="Left" Margin="259,204,0,0" Name="button2" VerticalAlignment="Top" Width="70" Click="Reset_Click" />

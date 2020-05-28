@@ -84,6 +84,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Connected Services\RegistrationASMXService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\RegistrationMQService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -115,6 +120,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\RegistrationASMXService\ProjectManagementFramework.RegistrationASMXService.RegisterUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\RegistrationASMXService\RegistrationASMXService.wsdl" />
     <None Include="Connected Services\RegistrationMQService\RegistrationServiceMQ.wsdl" />
     <None Include="Connected Services\RegistrationMQService\RegistrationServiceMQ.xsd">
       <SubType>Designer</SubType>
@@ -156,6 +165,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\RegistrationASMXService\" />
     <WCFMetadataStorage Include="Connected Services\RegistrationMQService\" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +179,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\RegistrationMQService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RegistrationASMXService\RegistrationASMXService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RegistrationASMXService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RegistrationASMXService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RegistrationASMXService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

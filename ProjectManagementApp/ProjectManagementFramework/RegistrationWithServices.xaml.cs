@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using BLL.Interfaces;
-using Model;
 using ProjectManagementFramework.RegistrationMQService;
+using ProjectManagementFramework.RegistrationASMXService;
 using System;
 using System.IO;
 using System.Linq;
@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
+using Model;
 
 namespace ProjectManagementFramework
 {
@@ -82,45 +83,6 @@ namespace ProjectManagementFramework
             }
         }
 
-        private bool _CheckInput()
-        {
-            string companyName = comboBoxCompany.SelectedItem.ToString();
-
-            if (string.IsNullOrWhiteSpace(textBoxFirstName.Text))
-            {
-                errormessage.Text = "Enter an first name.";
-                textBoxFirstName.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(textBoxLastName.Text))
-            {
-                errormessage.Text = "Enter an last name.";
-                textBoxFirstName.Focus();
-            }
-            else if (textBoxEmail.Text.Length == 0)
-            {
-                errormessage.Text = "Enter an email.";
-                textBoxEmail.Focus();
-            }
-            else if (!Regex.IsMatch(textBoxEmail.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
-            {
-                errormessage.Text = "Enter a valid email.";
-                textBoxEmail.Select(0, textBoxEmail.Text.Length);
-                textBoxEmail.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(companyName))
-            {
-                errormessage.Text = "Select your company!";
-                comboBoxCompany.Focus();
-            }
-            else
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-
         private void SubmitMQ_Click(object sender, RoutedEventArgs e)
         {
             if (_CheckInput())
@@ -160,6 +122,73 @@ namespace ProjectManagementFramework
                     errormessage.Text = $"Error occured. Email user with email {textBoxEmail.Text} already exist or problems with pass";
                 }
             }
+        }
+
+        private void SubmitASMX_Click(object sender, RoutedEventArgs e)
+        {
+            if (_CheckInput())
+            {
+                NewUserDTO newUser = new NewUserDTO()
+                {
+                    FirstName = textBoxFirstName.Text,
+                    LastName = textBoxLastName.Text,
+                    Email = textBoxEmail.Text,
+                    Password = passwordBox1.Password,
+                    CompanyId = _rCompanyService.GetCompanyIdByName(comboBoxCompany.SelectedItem.ToString())
+                };
+
+                var client = new RegistrationASMXServiceSoapClient();
+
+                var result = client.RegisterUser(newUser);
+
+                if (string.IsNullOrWhiteSpace(result))
+                {
+                    errormessage.Text = "";
+                    MessageBox.Show("You have Registered successfully!");
+                }
+                else
+                {
+                    errormessage.Text = result.ToString();
+                }
+            }
+        }
+
+        private bool _CheckInput()
+        {
+            string companyName = comboBoxCompany.SelectedItem.ToString();
+
+            if (string.IsNullOrWhiteSpace(textBoxFirstName.Text))
+            {
+                errormessage.Text = "Enter an first name.";
+                textBoxFirstName.Focus();
+            }
+            else if (string.IsNullOrWhiteSpace(textBoxLastName.Text))
+            {
+                errormessage.Text = "Enter an last name.";
+                textBoxFirstName.Focus();
+            }
+            else if (textBoxEmail.Text.Length == 0)
+            {
+                errormessage.Text = "Enter an email.";
+                textBoxEmail.Focus();
+            }
+            else if (!Regex.IsMatch(textBoxEmail.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+            {
+                errormessage.Text = "Enter a valid email.";
+                textBoxEmail.Select(0, textBoxEmail.Text.Length);
+                textBoxEmail.Focus();
+            }
+            else if (string.IsNullOrWhiteSpace(companyName))
+            {
+                errormessage.Text = "Select your company!";
+                comboBoxCompany.Focus();
+            }
+            else
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
